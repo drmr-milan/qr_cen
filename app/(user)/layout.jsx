@@ -1,4 +1,7 @@
 import "@/app/globals.css";
+import Footer from "@/components/Footer";
+import { Header_user } from "@/components/Header";
+import { cn } from "@/lib/utils";
 import { Outfit } from "next/font/google";
 
 const outfit = Outfit({ subsets: ["latin"] });
@@ -11,7 +14,18 @@ export const metadata = {
 export default function RootLayoutUser({ children }) {
 	return (
 		<html lang="sr">
-			<body className={outfit.className}>{children}</body>
+			<body
+				className={cn(
+					"flex flex-col min-h-screen-custom bg-gray-200 text-gray-900 dark:bg-gray-950 dark:text-gray-300 transition-colors duration-300 " +
+						outfit.className
+				)}
+			>
+				<Header_user />
+
+				{children}
+
+				<Footer />
+			</body>
 		</html>
 	);
 }

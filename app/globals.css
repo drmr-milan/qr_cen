@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+	.min-h-screen-custom {
+		min-height: 100vh;
+		min-height: 100svh;
+	}
+}
