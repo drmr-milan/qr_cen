@@ -9,6 +9,8 @@ export default async function LocalMain({ params }) {
 	// const data = await new Promise((resolve) => setTimeout(resolve, 500));
 	// console.log(params.local_name);
 
+	params.local_name = "kkk";
+
 	const data = {
 		local_name: "",
 		image: "/hotel_laktasi.jpg",

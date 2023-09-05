@@ -5,6 +5,10 @@ import Menu_w_imgs from "@/components/Menu_w_imgs";
 export default function Drinks({ params }) {
 	// console.log(params.local_name);
 
+	// const data = await getData from DB
+
+	params.local_name = "kkk";
+
 	const data_2 = [
 		{
 			category_name: "Topli napitci",
