@@ -1,3 +1,6 @@
+import { IconDiscount2, IconGlassFull, IconToolsKitchen2, IconBrandGoogle, IconSpeakerphone, IconInfoCircle } from "@tabler/icons-react";
+import Image from "next/image";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 
 export default async function LocalMain({ params }) {
@@ -6,9 +9,11 @@ export default async function LocalMain({ params }) {
 	// console.log(params.local_name);
 
 	const data = {
+		local_name: "",
+		image: "/hotel_laktasi.jpg",
 		promotions: true,
 		drinks_menu: true,
-		good_menu: true,
+		food_menu: true,
 		google_review: "",
 		events: true,
 		work_hours: true,
@@ -25,8 +30,139 @@ export default async function LocalMain({ params }) {
 	if (params.local_name !== "kkk") notFound();
 
 	return (
-		<main className="flex-grow">
-			<h1>Lokal name</h1>
+		<main className="flex flex-col flex-grow w-full mx-auto">
+			<div className="relative w-full aspect-[5/4] bg-gray-400">
+				<Image
+					src={data.image}
+					priority={true}
+					fill
+					// objectFit="cover"
+					// objectPosition="center"
+					alt={data.local_name + "logo"}
+				/>
+			</div>
+
+			<section className="flex-grow grid grid-cols-2 content-center">
+				{data.promotions === true && (
+					<article className="col-start-1 col-end-3">
+						<Link
+							href="#"
+							className="flex gap-2 items-center justify-center py-4"
+						>
+							<IconDiscount2
+								size={36}
+								stroke={1}
+							/>
+							<p className="text-xl">Promocije</p>
+						</Link>
+					</article>
+				)}
+
+				{data.drinks_menu === true && data.food_menu === true && (
+					<>
+						<article>
+							<Link
+								href="#"
+								className="flex gap-2 items-center justify-center py-4"
+							>
+								<IconGlassFull
+									size={36}
+									stroke={1}
+								/>
+								<p className="text-xl">Pica</p>
+							</Link>
+						</article>
+
+						<article>
+							<Link
+								href="#"
+								className="flex gap-2 items-center justify-center py-4"
+							>
+								<IconToolsKitchen2
+									size={36}
+									stroke={1}
+								/>
+								<p className="text-xl">Hrana</p>
+							</Link>
+						</article>
+					</>
+				)}
+
+				{data.drinks_menu === true && data.food_menu === false && (
+					<article className="col-start-1 col-end-3">
+						<Link
+							href="#"
+							className="flex gap-2 items-center justify-center py-4"
+						>
+							<IconGlassFull
+								size={36}
+								stroke={1}
+							/>
+							<p className="text-xl">Pica</p>
+						</Link>
+					</article>
+				)}
+
+				{data.drinks_menu === false && data.food_menu === true && (
+					<article className="col-start-1 col-end-3">
+						<Link
+							href="#"
+							className="flex gap-2 items-center justify-center py-4"
+						>
+							<IconToolsKitchen2
+								size={36}
+								stroke={1}
+							/>
+							<p className="text-xl">Hrana</p>
+						</Link>
+					</article>
+				)}
+
+				{data.google_review !== null && (
+					<article className="col-start-1 col-end-3">
+						<Link
+							href="#"
+							className="flex gap-2 items-center justify-center py-4"
+						>
+							<IconBrandGoogle
+								size={36}
+								stroke={1}
+							/>
+							<p className="text-xl">Google utisak</p>
+						</Link>
+					</article>
+				)}
+
+				{data.events === true && (
+					<article className="col-start-1 col-end-3">
+						<Link
+							href="#"
+							className="flex gap-2 items-center justify-center py-4"
+						>
+							<IconSpeakerphone
+								size={36}
+								stroke={1}
+							/>
+							<p className="text-xl">Desavanja</p>
+						</Link>
+					</article>
+				)}
+
+				{data.work_hours !== false && data.about_local !== null && (
+					<article className="col-start-1 col-end-3">
+						<Link
+							href="#"
+							className="flex gap-2 items-center justify-center py-4"
+						>
+							<IconInfoCircle
+								size={36}
+								stroke={1}
+							/>
+							<p className="text-xl">Vise o nama</p>
+						</Link>
+					</article>
+				)}
+			</section>
 		</main>
 	);
 }
