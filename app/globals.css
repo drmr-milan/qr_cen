@@ -7,4 +7,15 @@
 		min-height: 100vh;
 		min-height: 100svh;
 	}
+
+	.border-custom article:not(:last-child) {
+		border-bottom: 1px solid rgb(17 24 39);
+	}
+
+	.description-custom {
+		overflow: hidden;
+		display: -webkit-box;
+		-webkit-line-clamp: 3;
+		-webkit-box-orient: vertical;
+	}
 }

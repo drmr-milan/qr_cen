@@ -1,6 +1,5 @@
 import "@/app/globals.css";
 import Footer from "@/components/Footer";
-import { Header_user } from "@/components/Header";
 import { cn } from "@/lib/utils";
 import { Outfit } from "next/font/google";
 
@@ -20,8 +19,6 @@ export default function RootLayoutUser({ children }) {
 						outfit.className
 				)}
 			>
-				<Header_user />
-
 				{children}
 
 				<Footer />
