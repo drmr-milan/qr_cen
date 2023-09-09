@@ -12,10 +12,7 @@ import Image from "next/image";
 
 export default function Menu_w_imgs({ article, index_article }) {
 	return (
-		<article
-			className="grid grid-cols-2 items-center"
-			key={`${article.name}${index_article}`}
-		>
+		<article className="grid grid-cols-2 items-center">
 			<div className="text-center flex flex-col gap-4 p-2">
 				<p className="text-lg">{article.name}</p>
 				<p>{article.price} KM</p>
