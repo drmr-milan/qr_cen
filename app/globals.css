@@ -18,4 +18,8 @@
 		-webkit-line-clamp: 3;
 		-webkit-box-orient: vertical;
 	}
+
+	.custom-bg:nth-child(odd) {
+		background-color: rgba(209, 213, 219, 0.7);
+	}
 }
