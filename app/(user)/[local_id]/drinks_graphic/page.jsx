@@ -1,6 +1,6 @@
 import { Header_user_menus } from "@/components/Header";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import Menu_list from "@/components/Menu_dots_list";
+import Menu_w_imgs from "@/components/Menu_w_imgs";
 
 export default function Drinks({ params }) {
 	// console.log(params.local_name);
@@ -187,8 +187,9 @@ export default function Drinks({ params }) {
 								<AccordionContent className="duration-[3000ms] ease-in">
 									{category.articles.map((article, index_article) => {
 										return (
-											<Menu_list
+											<Menu_w_imgs
 												article={article}
+												index_article={index_article}
 												key={`${article.name}${index_article}`}
 											/>
 										);
