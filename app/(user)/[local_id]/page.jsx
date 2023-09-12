@@ -16,6 +16,7 @@ export default async function LocalMain({ params }) {
 		image: "/hotel_laktasi.jpg",
 		promotions: true,
 		drinks_menu: true,
+		drinks_graphic: true,
 		food_menu: true,
 		google_review: "",
 		events: true,
@@ -68,7 +69,7 @@ export default async function LocalMain({ params }) {
 						<>
 							<article className="col-start-1 col-end-3">
 								<Link
-									href={`/${params.local_name}/drinks`}
+									href={`/${params.local_name}/${data.drinks_graphic ? "drinks_graphic" : "drinks"}`}
 									className="flex gap-2 items-center justify-center py-4"
 								>
 									<IconGlassFull

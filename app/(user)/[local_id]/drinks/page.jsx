@@ -1,6 +1,6 @@
 import { Header_user_menus } from "@/components/Header";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import Menu_list from "@/components/Menu_dots_list";
+import Menu_list from "@/components/Menu_list";
 
 export default function Drinks({ params }) {
 	// console.log(params.local_name);
