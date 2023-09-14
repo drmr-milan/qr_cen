@@ -83,7 +83,7 @@ export default async function LocalMain({ params }) {
 
 							<article className="col-start-1 col-end-3">
 								<Link
-									href={`/${params.local_name}/${data.drinks_menu_graphic ? "food_graphic" : "food"}`}
+									href={`/${params.local_name}/${data.food_menu_graphic ? "food_graphic" : "food"}`}
 									className="flex gap-2 items-center justify-center py-4"
 								>
 									<IconToolsKitchen2
@@ -114,7 +114,7 @@ export default async function LocalMain({ params }) {
 					{data.drinks_menu === false && data.food_menu === true && (
 						<article className="col-start-1 col-end-3">
 							<Link
-								href={`/${params.local_name}/${data.drinks_menu_graphic ? "food_graphic" : "food"}`}
+								href={`/${params.local_name}/${data.food_menu_graphic ? "food_graphic" : "food"}`}
 								className="flex gap-2 items-center justify-center py-4"
 							>
 								<IconToolsKitchen2
