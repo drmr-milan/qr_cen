@@ -16,8 +16,9 @@ export default async function LocalMain({ params }) {
 		image: "/hotel_laktasi.jpg",
 		promotions: true,
 		drinks_menu: true,
-		drinks_graphic: true,
+		drinks_menu_graphic: false,
 		food_menu: true,
+		food_menu_graphic: true,
 		google_review: "",
 		events: true,
 		work_hours: true,
@@ -69,7 +70,7 @@ export default async function LocalMain({ params }) {
 						<>
 							<article className="col-start-1 col-end-3">
 								<Link
-									href={`/${params.local_name}/${data.drinks_graphic ? "drinks_graphic" : "drinks"}`}
+									href={`/${params.local_name}/${data.drinks_menu_graphic ? "drinks_graphic" : "drinks"}`}
 									className="flex gap-2 items-center justify-center py-4"
 								>
 									<IconGlassFull
@@ -82,7 +83,7 @@ export default async function LocalMain({ params }) {
 
 							<article className="col-start-1 col-end-3">
 								<Link
-									href="#"
+									href={`/${params.local_name}/${data.drinks_menu_graphic ? "food_graphic" : "food"}`}
 									className="flex gap-2 items-center justify-center py-4"
 								>
 									<IconToolsKitchen2
@@ -98,7 +99,7 @@ export default async function LocalMain({ params }) {
 					{data.drinks_menu === true && data.food_menu === false && (
 						<article className="col-start-1 col-end-3">
 							<Link
-								href={`/${params.local_name}/drinks`}
+								href={`/${params.local_name}/${data.drinks_menu_graphic ? "drinks_graphic" : "drinks"}`}
 								className="flex gap-2 items-center justify-center py-4"
 							>
 								<IconGlassFull
@@ -113,7 +114,7 @@ export default async function LocalMain({ params }) {
 					{data.drinks_menu === false && data.food_menu === true && (
 						<article className="col-start-1 col-end-3">
 							<Link
-								href="#"
+								href={`/${params.local_name}/${data.drinks_menu_graphic ? "food_graphic" : "food"}`}
 								className="flex gap-2 items-center justify-center py-4"
 							>
 								<IconToolsKitchen2

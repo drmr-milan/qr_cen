@@ -1,8 +1,8 @@
 import { Header_user_menus } from "@/components/Header";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import Menu_w_imgs from "@/components/Menu_w_imgs";
+import Menu_list from "@/components/Menu_list";
 
-export default function Drinks_graphic({ params }) {
+export default function Food({ params }) {
 	// console.log(params.local_name);
 
 	// const data = await getData from DB
@@ -11,61 +11,61 @@ export default function Drinks_graphic({ params }) {
 
 	const data_2 = [
 		{
-			category_name: "Topli napitci",
+			category_name: "Doručak",
 			articles: [
 				{
-					name: "Domaća kafa",
-					price: 2.5,
+					name: "Omlet Sa Sirom",
+					price: 6.5,
 					image: "/img.jpg",
-					description: null,
+					description: "3 jajeta, pecivo",
 					volume: null,
 				},
 				{
-					name: "Espresso",
-					price: 2,
+					name: "Omlet Sa Sirom i Slaninom",
+					price: 7.5,
 					image: "/img.jpg",
-					description: null,
+					description: "3 jajeta, pecivo",
 					volume: null,
 				},
 				{
-					name: "Capucchino",
-					price: 2,
+					name: "Omlet Sa Sirom i Šunkom",
+					price: 7.5,
 					image: "/img.jpg",
-					description: null,
+					description: "3 jajeta, pecivo",
 					volume: null,
 				},
 				{
-					name: "Nes",
-					price: 1.5,
+					name: "Omlet Sa Sirom i Kobasicama",
+					price: 7.5,
 					image: "/img.jpg",
-					description: null,
+					description: "3 jajeta, pecivo",
 					volume: null,
 				},
 				{
-					name: "Topla čokolada",
-					price: 3,
+					name: "Jaja Sa Hrenovkama",
+					price: 7.5,
 					image: "/img.jpg",
-					description: null,
+					description: "2 jajeta na oko, 3 hrenovke, pecivo",
 					volume: null,
 				},
 				{
-					name: "Čaj",
-					price: 2,
+					name: "Bavarski doručak",
+					price: 10,
 					image: "/img.jpg",
-					description: null,
+					description: "kranjska kobasica, 3 jajeta, pomfrit, pavlaka, senf",
 					volume: null,
 				},
 				{
-					name: "Jutarna kafa do 9h",
-					price: 1.5,
+					name: "Gurmanski Doručak",
+					price: 7.5,
 					image: "/img.jpg",
-					description: null,
+					description: "2 jajeta, 4 uštipka, mladi sir, 4 parčeta slanine",
 					volume: null,
 				},
 			],
 		},
 		{
-			category_name: "Sokovi",
+			category_name: "Piletina",
 			articles: [
 				{
 					name: "Coca Cola",
@@ -74,31 +74,10 @@ export default function Drinks_graphic({ params }) {
 					description: null,
 					volume: 0.25,
 				},
-				{
-					name: "Cockta",
-					price: 2,
-					image: "/img.jpg",
-					description: null,
-					volume: 0.25,
-				},
-				{
-					name: "Red Bull",
-					price: 5,
-					image: "/img.jpg",
-					description: null,
-					volume: 0.25,
-				},
-				{
-					name: "Negazirani sokovi",
-					price: 3,
-					image: "/img.jpg",
-					description: "Narandža, jagoda, jabuka, višnja, breskva, ribizla, multivitamin",
-					volume: 0.25,
-				},
 			],
 		},
 		{
-			category_name: "Pivo",
+			category_name: "Teletina",
 			articles: [
 				{
 					name: "Heineken",
@@ -107,55 +86,13 @@ export default function Drinks_graphic({ params }) {
 					description: null,
 					volume: 0.33,
 				},
-				{
-					name: "Becks",
-					price: 3.5,
-					image: "/img.jpg",
-					description: null,
-					volume: 0.33,
-				},
-				{
-					name: "Tuborg",
-					price: 4,
-					image: "/img.jpg",
-					description: null,
-					volume: 0.33,
-				},
-				{
-					name: "Bavaria - Bezalkoholno",
-					price: 4,
-					image: "/img.jpg",
-					description: null,
-					volume: 0.33,
-				},
 			],
 		},
 		{
-			category_name: "Žestoka pića",
+			category_name: "Svinjetina",
 			articles: [
 				{
 					name: "Whiskey Chivas Regal",
-					price: 5,
-					image: "/img.jpg",
-					description: null,
-					volume: 0.03,
-				},
-				{
-					name: "Whiskey Jack Daniels",
-					price: 5,
-					image: "/img.jpg",
-					description: null,
-					volume: 0.03,
-				},
-				{
-					name: "Jägermeister",
-					price: 5,
-					image: "/img.jpg",
-					description: null,
-					volume: 0.03,
-				},
-				{
-					name: "Gorki List",
 					price: 5,
 					image: "/img.jpg",
 					description: null,
@@ -187,9 +124,8 @@ export default function Drinks_graphic({ params }) {
 								<AccordionContent>
 									{category.articles.map((article, index_article) => {
 										return (
-											<Menu_w_imgs
+											<Menu_list
 												article={article}
-												index_article={index_article}
 												key={`${article.name}${index_article}`}
 											/>
 										);

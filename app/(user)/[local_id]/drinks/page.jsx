@@ -184,7 +184,7 @@ export default function Drinks({ params }) {
 								key={index_category}
 							>
 								<AccordionTrigger className="text-lg">{category.category_name}</AccordionTrigger>
-								<AccordionContent className="duration-[3000ms] ease-in">
+								<AccordionContent>
 									{category.articles.map((article, index_article) => {
 										return (
 											<Menu_list
