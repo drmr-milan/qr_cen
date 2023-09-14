@@ -10,7 +10,9 @@ export default function Menu_list({ article }) {
 			</div>
 
 			<div className="w-20">
-				<p className="text-right">{article.price} KM</p>
+				<p className="text-right">
+					{article.price} <span className="text-xs">KM</span>
+				</p>
 			</div>
 		</article>
 	);

@@ -21,6 +21,7 @@ export default async function LocalMain({ params }) {
 		food_menu_graphic: true,
 		google_review: "",
 		events: true,
+		events_graphic: true,
 		work_hours: true,
 		monday: "",
 		tuesday: "",
@@ -144,7 +145,7 @@ export default async function LocalMain({ params }) {
 					{data.events === true && (
 						<article className="col-start-1 col-end-3">
 							<Link
-								href={`/${params.local_name}/events`}
+								href={`/${params.local_name}/${data.events_graphic ? "events_graphic" : "events"}`}
 								className="flex gap-2 items-center justify-center py-4"
 							>
 								<IconSpeakerphone
