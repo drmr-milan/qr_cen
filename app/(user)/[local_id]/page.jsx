@@ -144,7 +144,7 @@ export default async function LocalMain({ params }) {
 					{data.events === true && (
 						<article className="col-start-1 col-end-3">
 							<Link
-								href="#"
+								href="/events"
 								className="flex gap-2 items-center justify-center py-4"
 							>
 								<IconSpeakerphone
