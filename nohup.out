@@ -1,0 +1,34 @@
+Gtk-Message: 11:21:23.085: Failed to load module "appmenu-gtk-module"
+[4476:4476:0916/112124.066303:ERROR:chrome_browser_cloud_management_controller.cc(163)] Cloud management controller initialization aborted as CBCM is not enabled.
+libva error: vaGetDriverNameByIndex() failed with unknown libva error, driver_name = (null)
+[4524:4524:0916/112128.914912:ERROR:gl_surface_presentation_helper.cc(260)] GetVSyncParametersIfAvailable() failed for 1 times!
+[4524:4524:0916/112129.960888:ERROR:gl_surface_presentation_helper.cc(260)] GetVSyncParametersIfAvailable() failed for 2 times!
+Fontconfig error: Cannot load default config file: No such file: (null)
+[4524:4524:0916/112131.513913:ERROR:gl_surface_presentation_helper.cc(260)] GetVSyncParametersIfAvailable() failed for 3 times!
+[4476:4476:0916/112137.341461:ERROR:zygote_communication_linux.cc(296)] Failed to send GetTerminationStatus message to zygote
+[4476:4476:0916/112137.353954:ERROR:zygote_communication_linux.cc(296)] Failed to send GetTerminationStatus message to zygote
+[4476:4476:0916/112137.364731:ERROR:zygote_communication_linux.cc(296)] Failed to send GetTerminationStatus message to zygote
+[4476:4476:0916/112137.367455:ERROR:zygote_communication_linux.cc(296)] Failed to send GetTerminationStatus message to zygote
+[4476:4476:0916/112137.419291:ERROR:network_service_instance_impl.cc(625)] Network service crashed, restarting service.
+[4476:4476:0916/112137.474716:ERROR:zygote_communication_linux.cc(296)] Failed to send GetTerminationStatus message to zygote
+[4476:4476:0916/112137.507985:ERROR:zygote_communication_linux.cc(296)] Failed to send GetTerminationStatus message to zygote
+[4476:4476:0916/112137.565574:ERROR:zygote_communication_linux.cc(296)] Failed to send GetTerminationStatus message to zygote
+[4476:4476:0916/112138.826197:ERROR:zygote_communication_linux.cc(296)] Failed to send GetTerminationStatus message to zygote
+[4476:4476:0916/112138.836913:ERROR:gpu_process_host.cc(952)] GPU process launch failed: error_code=1002
+[4476:4476:0916/112138.842630:ERROR:gpu_process_host.cc(952)] GPU process launch failed: error_code=1002
+[4476:4476:0916/112138.848603:ERROR:gpu_process_host.cc(952)] GPU process launch failed: error_code=1002
+[4476:4476:0916/112138.854172:ERROR:gpu_process_host.cc(952)] GPU process launch failed: error_code=1002
+[4476:4476:0916/112138.858271:ERROR:gpu_process_host.cc(952)] GPU process launch failed: error_code=1002
+[4476:4476:0916/112138.861888:ERROR:gpu_process_host.cc(952)] GPU process launch failed: error_code=1002
+[4476:4476:0916/112138.867538:ERROR:gpu_process_host.cc(952)] GPU process launch failed: error_code=1002
+[4476:4476:0916/112138.871202:ERROR:gpu_process_host.cc(952)] GPU process launch failed: error_code=1002
+[4476:4476:0916/112138.875915:ERROR:gpu_process_host.cc(952)] GPU process launch failed: error_code=1002
+[4476:4476:0916/112138.875952:FATAL:gpu_data_manager_impl_private.cc(431)] GPU process isn't usable. Goodbye.
+[0916/112138.980603:ERROR:elf_dynamic_array_reader.h(64)] tag not found
+[0916/112138.981752:ERROR:elf_dynamic_array_reader.h(64)] tag not found
+[0916/112138.987642:ERROR:elf_dynamic_array_reader.h(64)] tag not found
+[0916/112138.997736:ERROR:elf_dynamic_array_reader.h(64)] tag not found
+[0916/112139.025242:ERROR:elf_dynamic_array_reader.h(64)] tag not found
+[0916/112139.025770:ERROR:elf_dynamic_array_reader.h(64)] tag not found
+[0916/112139.034739:ERROR:elf_dynamic_array_reader.h(64)] tag not found
+[0916/112139.037662:ERROR:elf_dynamic_array_reader.h(64)] tag not found

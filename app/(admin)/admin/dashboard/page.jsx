@@ -2,6 +2,7 @@ import { IconPencil } from "@tabler/icons-react";
 import Link from "next/link";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { About_form, Form_facebook, Form_instagram, Social_m_form } from "./Social_m_forms";
 
 export default function Dashboard() {
 	const predplata = 2;
@@ -11,11 +12,11 @@ export default function Dashboard() {
 			<p className="text-center text-xl font-semibold mb-6">Name of local</p>
 
 			<section className="grid grid-cols-2 md:grid-cols-4">
-				<article className="flex flex-col gap-4 bg-gray-900 text-gray-200 px-2 text-center pt-4 pb-6 m-2 rounded-md col-span-2">
+				<article className="flex flex-col gap-4 text-center px-4 pt-4 pb-6 m-4 rounded-md col-span-2 border-[1px] border-gray-900">
 					<p className="text-center font-semibold mb-2">Info</p>
 
 					<div className="flex justify-center items-center">
-						<p>Aktivan paket: _______</p>
+						<p>Aktivan paket: Besplatan</p>
 
 						{predplata !== 3 && <p className="ml-8">Unapredi paket</p>}
 					</div>
@@ -25,7 +26,7 @@ export default function Dashboard() {
 					{predplata !== 3 && <p className="italic">Saznaj vise od boljim paketima</p>}
 				</article>
 
-				<article className="flex flex-col gap-4 bg-gray-900 text-gray-200 px-2 pt-4 pb-6 m-2 rounded-md text-center col-span-2">
+				<article className="flex flex-col gap-4 px-4 pt-4 pb-6 m-4 rounded-md text-center col-span-2 border-[1px] border-gray-900">
 					<p className="font-semibold mb-2">Pregledi ____</p>
 
 					<div className="flex gap-4 items-center justify-center">
@@ -59,7 +60,7 @@ export default function Dashboard() {
 					</div>
 				</article>
 
-				<article className="px-2 py-4 m-2 rounded-md col-span-2 border-[1px] border-gray-900">
+				<article className="px-4 pt-4 pb-6 m-4 rounded-md col-span-2 border-[1px] border-gray-900">
 					<p className="font-semibold mb-6 text-center">Karta pica</p>
 
 					<div className="flex flex-wrap justify-evenly">
@@ -120,7 +121,7 @@ export default function Dashboard() {
 					</div>
 				</article>
 
-				<article className="px-2 py-4 m-2 rounded-md col-span-2 border-[1px] border-gray-900">
+				<article className="px-4 pt-4 pb-6 m-4 rounded-md col-span-2 border-[1px] border-gray-900">
 					<p className="font-semibold mb-6 text-center">Meni</p>
 
 					<div className="flex flex-wrap justify-evenly">
@@ -181,27 +182,60 @@ export default function Dashboard() {
 					</div>
 				</article>
 
-				<article className="px-2 py-4 m-2 rounded-md col-span-1 border-[1px] border-gray-900">
+				<article className="px-4 pt-4 pb-6 m-4 rounded-md col-span-1 border-[1px] border-gray-900">
 					<p className="font-semibold mb-6 text-center">Promocije</p>
 				</article>
 
-				<article className="px-2 py-4 m-2 rounded-md col-span-1 border-[1px] border-gray-900">
+				<article className="px-4 pt-4 pb-6 m-4 rounded-md col-span-1 border-[1px] border-gray-900">
 					<p className="font-semibold mb-6 text-center">Dešavanja</p>
 				</article>
 
-				<article className="px-2 py-4 m-2 rounded-md col-span-2 border-[1px] border-gray-900">
+				<article className="px-4 pt-4 pb-6 m-4 rounded-md col-span-2 border-[1px] border-gray-900">
 					<p className="font-semibold mb-6 text-center">O nama</p>
 
 					<p>Prikazi radno vrijeme</p>
 
-					<p>Ukratko o nama</p>
+					<About_form value={null} />
+				</article>
 
-					<div>
-						<p>Social media links</p>
+				<article className="flex flex-col gap-2 px-4 pt-4 pb-6 m-4 rounded-md text-center col-span-2 border-[1px] border-gray-900">
+					<p className="font-semibold mb-6 text-center">Linkovi</p>
 
-						<p>Instagram</p>
-						<p>Facebook</p>
-					</div>
+					<Social_m_form
+						form_name="Instagram"
+						type="url"
+						value={null}
+					/>
+
+					<Social_m_form
+						form_name="Facebook"
+						type="url"
+						value={null}
+					/>
+
+					<Social_m_form
+						form_name="Booking"
+						type="url"
+						value={null}
+					/>
+
+					<Social_m_form
+						form_name="Website"
+						type="url"
+						value={null}
+					/>
+
+					<Social_m_form
+						form_name="Email"
+						type="email"
+						value={null}
+					/>
+
+					<Social_m_form
+						form_name="Phone"
+						type="tel"
+						value={null}
+					/>
 				</article>
 			</section>
 		</main>
