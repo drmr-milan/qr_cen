@@ -2,7 +2,7 @@ import { IconPencil } from "@tabler/icons-react";
 import Link from "next/link";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { About_form, Form_facebook, Form_instagram, Social_m_form } from "./Social_m_forms";
+import { Work_hours_form, About_form, Social_m_form } from "./Forms";
 
 export default function Dashboard() {
 	const predplata = 2;
@@ -10,6 +10,9 @@ export default function Dashboard() {
 	return (
 		<main className="flex-grow py-8">
 			<p className="text-center text-xl font-semibold mb-6">Name of local</p>
+
+			<p className="italic opacity-70">** dodati dugme za link lokala</p>
+			<p className="italic opacity-70">** radno vreme on/off i po danima</p>
 
 			<section className="grid grid-cols-2 md:grid-cols-4">
 				<article className="flex flex-col gap-4 text-center px-4 pt-4 pb-6 m-4 rounded-md col-span-2 border-[1px] border-gray-900">
@@ -190,10 +193,10 @@ export default function Dashboard() {
 					<p className="font-semibold mb-6 text-center">Dešavanja</p>
 				</article>
 
-				<article className="px-4 pt-4 pb-6 m-4 rounded-md col-span-2 border-[1px] border-gray-900">
-					<p className="font-semibold mb-6 text-center">O nama</p>
+				<article className="flex flex-col gap-2 px-4 pt-4 pb-6 m-4 rounded-md col-span-2 border-[1px] border-gray-900">
+					<p className="font-semibold mb-6 text-center">Vise informacija</p>
 
-					<p>Prikazi radno vrijeme</p>
+					<Work_hours_form day_of_week="Ponedeljak" />
 
 					<About_form value={null} />
 				</article>

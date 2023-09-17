@@ -61,18 +61,17 @@ export function About_form({ value }) {
 	const [state, setState] = useState(value?.lenght || 0);
 
 	return (
-		<form className="relative">
+		<form className="relative mt-4">
 			<Label
 				htmlFor="about"
 				className="bg-gray-200 px-1 absolute top-[-1rem] left-2 text-base font-normal"
 			>
-				Tekst
+				Opis
 			</Label>
 
 			<Textarea
 				id="about"
 				name="about"
-				placeholder="Opis o Vama i vasem lokalu"
 				defaultValue={value}
 				className="bg-transparent border-[1px] border-gray-900 text-base flex-grow h-[15rem] resize-none"
 				// onInput={(e) => setState(e.target.about.value.lenght)}
@@ -82,9 +81,9 @@ export function About_form({ value }) {
 				}}
 			/>
 
-			<p className="bg-gray-200 px-1 absolute top-0 right-2 text-sm font-normal translate-y-[-50%]">{state} / 300</p>
+			<p className="bg-gray-200 px-1 pb-1 absolute top-0 right-2 text-sm font-normal translate-y-[-50%]">{state} / 300</p>
 
-			<div className="flex  justify-end ">
+			<div className="flex gap-2 justify-end">
 				<button
 					type="button"
 					onClick={() => (document.getElementById("about").value = value)}
@@ -95,6 +94,35 @@ export function About_form({ value }) {
 						className="p-2"
 					/>
 				</button>
+
+				<button type="submit">
+					<IconCheck
+						size={44}
+						stroke={1}
+						className="p-2"
+					/>
+				</button>
+			</div>
+		</form>
+	);
+}
+
+export function Work_hours_form({ day_of_week }) {
+	return (
+		<form>
+			<Label className="text-base font-normal">{day_of_week.split("_")[0]}</Label>
+
+			<div className="flex gap-2 items-center mt-1">
+				<Input
+					type="time"
+					placeholder="od"
+					className="bg-transparent border-[1px] border-gray-900 text-base flex-grow"
+				/>
+				<Input
+					type="time"
+					placeholder="do"
+					className="bg-transparent border-[1px] border-gray-900 text-base flex-grow"
+				/>
 
 				<button type="submit">
 					<IconCheck
