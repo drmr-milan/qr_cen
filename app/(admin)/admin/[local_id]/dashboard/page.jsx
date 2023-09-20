@@ -59,7 +59,7 @@ export default function Dashboard({ params }) {
 		{
 			name: "Telefon",
 			value: content.telefon,
-			type: "phone",
+			type: "tel",
 			schema: Phone_schema,
 		},
 	];

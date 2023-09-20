@@ -3,7 +3,7 @@ import SM_link_form from "./SM_link_form";
 
 export default function SM_link_wrapper({ local_id, name, value, type, schema }) {
 	return (
-		<div>
+		<div className="truncate">
 			<div className="flex justify-between items-center">
 				<p>{name}</p>
 
@@ -26,7 +26,7 @@ export default function SM_link_wrapper({ local_id, name, value, type, schema })
 				</Link>
 			)}
 
-			{value && type !== "url" && <p>{value}</p>}
+			{value && type !== "url" && <p className="italic">{value}</p>}
 		</div>
 	);
 }

@@ -18,3 +18,20 @@ export async function PUT(req, { params }) {
 
 	return NextResponse.json({ message: "SM link updated" }, { status: 200 });
 }
+
+export async function PATCH(req, { params }) {
+	const { local_id, new_link_field } = await req.json();
+	const db_connection = await promisePool.getConnection();
+
+	try {
+		await db_connection.query("UPDATE qr_cen.locals SET ?? = NULL WHERE id = ?;", [new_link_field.toLowerCase(), local_id]);
+
+		await db_connection.release();
+	} catch (error) {
+		await db_connection.release();
+		console.log(error);
+		return NextResponse.json({ message: "Error" });
+	}
+
+	return NextResponse.json({ message: "SM link removed" }, { status: 200 });
+}

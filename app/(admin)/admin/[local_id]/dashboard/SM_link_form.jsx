@@ -52,6 +52,31 @@ export default function SM_link_form({ local_id, name, value, type, schema }) {
 		mutate(`http://0.0.0.0:3000/api/admin/dashboard/${local_id}`);
 	}
 
+	async function onSubmit_remove() {
+		setOpen(false);
+
+		toast({
+			title: `Izmjena - ${name} linka`,
+			description: <p>U toku</p>,
+		});
+
+		const send_data = await fecher("/api/admin/sm_links", {
+			method: "PATCH",
+			body: JSON.stringify({ local_id, new_link_field: name }),
+		}).catch((error) => {
+			console.log(error);
+			alert("Došlo je do greške.");
+			location.reload();
+		});
+
+		toast({
+			title: `Izmjena - ${name} linka`,
+			description: <p>Uspjesno uklonjen</p>,
+		});
+
+		mutate(`http://0.0.0.0:3000/api/admin/dashboard/${local_id}`);
+	}
+
 	return (
 		<Dialog
 			open={open}
@@ -87,7 +112,6 @@ export default function SM_link_form({ local_id, name, value, type, schema }) {
 							control={form.control}
 							name="new_link"
 							defaultValue={value || ""}
-							type={type}
 							render={({ field }) => (
 								<FormItem>
 									<FormControl>
@@ -95,6 +119,7 @@ export default function SM_link_form({ local_id, name, value, type, schema }) {
 											{...field}
 											placeholder={placeholder}
 											autoComplete="off"
+											type={type}
 										/>
 									</FormControl>
 									<FormMessage />
@@ -103,13 +128,37 @@ export default function SM_link_form({ local_id, name, value, type, schema }) {
 						/>
 					</form>
 				</Form>
-				<DialogFooter>
-					<DialogClose>Odustani</DialogClose>
+
+				<Form {...form}>
+					<form
+						onSubmit={form.handleSubmit(onSubmit_remove)}
+						id={`${name}_form_remove`}
+						className="hidden"
+					></form>
+				</Form>
+				<DialogFooter className="grid gap-2">
 					<Button
 						type="submit"
 						form={`${name}_form`}
 					>
 						Sačuvaj
+					</Button>
+
+					{value && (
+						<Button
+							type="submit"
+							variant="destructive"
+							form={`${name}_form_remove`}
+						>
+							Ukloni link
+						</Button>
+					)}
+
+					<Button
+						asChild
+						variant="ghost"
+					>
+						<DialogClose>Odustani</DialogClose>
 					</Button>
 				</DialogFooter>
 			</DialogContent>

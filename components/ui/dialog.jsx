@@ -89,7 +89,7 @@ DialogDescription.displayName = DialogPrimitive.Description.displayName;
 const DialogClose = React.forwardRef(({ className, ...props }, ref) => (
 	<DialogPrimitive.Close
 		ref={ref}
-		className={cn("mt-2 sm:mt-0", className)}
+		className={className}
 		{...props}
 	/>
 ));
