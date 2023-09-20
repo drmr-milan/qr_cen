@@ -1,20 +1,19 @@
 "use client";
 
-import { IconPencil } from "@tabler/icons-react";
 import Link from "next/link";
+
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Work_hours_form, About_form, Social_m_form } from "./OLD_Forms";
-import { format, differenceInCalendarDays } from "date-fns";
-import { Info_free, Info_paid, Info_paid_exired } from "./Info_elements";
-import { IconPlus } from "@tabler/icons-react";
-import { IconEdit } from "@tabler/icons-react";
 
-import FormOneInput from "@/components/FormOneInput";
+import { format, differenceInCalendarDays } from "date-fns";
+
+import { IconPencil, IconPlus, IconEdit } from "@tabler/icons-react";
+
+import SM_link_wrapper from "./SM_link_wrapper";
+import { Email_schema, Phone_schema, URL_schema } from "@/utils/ValidationShemas";
+import { Info_free, Info_paid, Info_paid_exired } from "./Info_elements";
 
 import useSWR from "swr";
-import Test from "./Test";
-import { URL_form, URL_form_wrapper } from "./Forms";
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
 export default function Dashboard({ params }) {
@@ -24,7 +23,46 @@ export default function Dashboard({ params }) {
 
 	const { content } = data;
 
-	console.log(content);
+	// console.log(content);
+
+	const SM_links = [
+		{
+			name: "Instagram",
+			value: content.instagram,
+			type: "url",
+			schema: URL_schema,
+		},
+		{
+			name: "Facebook",
+			value: content.facebook,
+			type: "url",
+			schema: URL_schema,
+		},
+		{
+			name: "Booking",
+			value: content.booking,
+			type: "url",
+			schema: URL_schema,
+		},
+		{
+			name: "Website",
+			value: content.website,
+			type: "url",
+			schema: URL_schema,
+		},
+		{
+			name: "Email",
+			value: content.email,
+			type: "email",
+			schema: Email_schema,
+		},
+		{
+			name: "Telefon",
+			value: content.telefon,
+			type: "phone",
+			schema: Phone_schema,
+		},
+	];
 
 	return (
 		<main className="flex-grow py-8">
@@ -247,69 +285,18 @@ export default function Dashboard({ params }) {
 				<article className="flex flex-col gap-2 px-4 pt-4 pb-6 m-4 rounded-md col-span-2 border-[1px] border-gray-900">
 					<p className="font-semibold mb-6 text-center">Linkovi</p>
 
-					{/* <URL_form_wrapper
-						name="Instagram"
-						value={content.Instagram}
-					/> */}
-
-					{/* <URL_form_wrapper
-						name="Facebook"
-						value={content.Facebook}
-					/>
-
-					<URL_form_wrapper
-						name="Booking"
-						value={content.Booking}
-					/>
-
-					<URL_form_wrapper
-						name="Website"
-						value={content.Website}
-					/> */}
-
-					<div>
-						<div className="flex justify-between items-center">
-							<p>Instagram</p>
-
-							<Test
-								name="Instagram"
-								value={content.Instagram}
-								type="url"
+					{SM_links.map((item) => {
+						return (
+							<SM_link_wrapper
+								local_id={params.local_id}
+								name={item.name}
+								value={item.value}
+								type={item.type}
+								schema={item.schema}
+								key={`${item.name}_element`}
 							/>
-						</div>
-
-						{content.Instagram && (
-							<Link
-								href={content.Instagram}
-								target="_blank"
-								className="italic underline underline-offset-2"
-							>
-								{content.Instagram}
-							</Link>
-						)}
-					</div>
-
-					{/* <div>
-						<div className="flex justify-between items-center">
-							<p>Facebook</p>
-
-							<Test
-								name="Facebook"
-								value={content.Facebook}
-								type="url"
-							/>
-						</div>
-
-						{content.Facebook && (
-							<Link
-								href={content.Facebook}
-								target="_blank"
-								className="italic underline underline-offset-2"
-							>
-								{content.Facebook}
-							</Link>
-						)}
-					</div> */}
+						);
+					})}
 				</article>
 			</section>
 		</main>

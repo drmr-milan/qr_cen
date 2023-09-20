@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-// import { URL_schema } from "@/lib/ValidationShemas";
+import { URL_schema } from "@/utils/ValidationShemas";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -18,18 +18,13 @@ import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogT
 
 import { IconEdit, IconPlus } from "@tabler/icons-react";
 
-const URL_schema = z.object({
-	Instagram: z.string(),
-	Facebook: z.string().url({ message: "Mora biti isptava link" }).max(100, { message: "Link ne može biti duži od 100 karaktera" }),
-});
-
-export function URL_form_wrapper({ name, value }) {
+export function URL_form_wrapper({ name, value, type }) {
 	const form = useForm({ resolver: zodResolver(URL_schema) });
 	const { toast } = useToast();
 	const [open, setOpen] = useState(false);
 
 	function onSubmit(data) {
-		console.log(data);
+		console.log({ new_link_field: name, new_link_value: data.new_link });
 
 		// e.preventDefault();
 
@@ -82,28 +77,31 @@ export function URL_form_wrapper({ name, value }) {
 							>
 								<FormField
 									control={form.control}
-									name={name}
+									name="new_link"
 									defaultValue={value || ""}
-									type="url"
+									type={type}
 									render={({ field }) => (
 										<FormItem>
 											<FormControl>
-												<Input {...field} />
+												<Input
+													{...field}
+													placeholder="https://"
+												/>
 											</FormControl>
 											<FormMessage />
 										</FormItem>
 									)}
 								/>
-								<Button
-									type="submit"
-									form={`${name}_form`}
-								>
-									Sačuvaj
-								</Button>
 							</form>
 						</Form>
 						<DialogFooter>
 							<DialogClose>Odustani</DialogClose>
+							<Button
+								type="submit"
+								form={`${name}_form`}
+							>
+								Sačuvaj
+							</Button>
 						</DialogFooter>
 					</DialogContent>
 				</Dialog>
