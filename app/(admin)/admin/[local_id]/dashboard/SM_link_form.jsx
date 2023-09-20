@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { mutate } from "swr";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -13,6 +14,8 @@ import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogT
 
 import { IconEdit, IconPlus } from "@tabler/icons-react";
 
+const fecher = (...args) => fetch(...args).then((res) => res.json());
+
 export default function SM_link_form({ local_id, name, value, type, schema }) {
 	const form = useForm({ resolver: zodResolver(schema) });
 	const { toast } = useToast();
@@ -23,29 +26,30 @@ export default function SM_link_form({ local_id, name, value, type, schema }) {
 	if (type === "phone") placeholder = "065111222";
 
 	async function onSubmit(data) {
-		console.log({ local_id, new_link_field: name, new_link_value: data.new_link });
+		console.log();
 
 		setOpen(false);
 
 		toast({
 			title: `Izmjena - ${name} linka`,
-			description: (
-				// <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-				<p>U toku</p>
-				// </pre>
-			),
+			description: <p>U toku</p>,
 		});
 
-		await new Promise((resolve) => setTimeout(resolve, 2000));
+		const send_data = await fecher("/api/admin/sm_links", {
+			method: "PUT",
+			body: JSON.stringify({ local_id, new_link_field: name, new_link_value: data.new_link }),
+		}).catch((error) => {
+			console.log(error);
+			alert("Došlo je do greške.");
+			location.reload();
+		});
 
 		toast({
 			title: `Izmjena - ${name} linka`,
-			description: (
-				// <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-				<p>Uspjesno izmjenjeno</p>
-				// </pre>
-			),
+			description: <p>Uspjesno izmjenjeno</p>,
 		});
+
+		mutate(`http://0.0.0.0:3000/api/admin/dashboard/${local_id}`);
 	}
 
 	return (
