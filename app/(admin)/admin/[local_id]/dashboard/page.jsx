@@ -4,7 +4,7 @@ import { IconPencil } from "@tabler/icons-react";
 import Link from "next/link";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Work_hours_form, About_form, Social_m_form } from "./Forms";
+import { Work_hours_form, About_form, Social_m_form } from "./OLD_Forms";
 import { format, differenceInCalendarDays } from "date-fns";
 import { Info_free, Info_paid, Info_paid_exired } from "./Info_elements";
 import { IconPlus } from "@tabler/icons-react";
@@ -14,6 +14,7 @@ import FormOneInput from "@/components/FormOneInput";
 
 import useSWR from "swr";
 import Test from "./Test";
+import { URL_form, URL_form_wrapper } from "./Forms";
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
 export default function Dashboard({ params }) {
@@ -246,10 +247,24 @@ export default function Dashboard({ params }) {
 				<article className="flex flex-col gap-2 px-4 pt-4 pb-6 m-4 rounded-md col-span-2 border-[1px] border-gray-900">
 					<p className="font-semibold mb-6 text-center">Linkovi</p>
 
-					{/* <Social_m_form
-						form_name="Instagram"
-						type="url"
-						value={null}
+					{/* <URL_form_wrapper
+						name="Instagram"
+						value={content.Instagram}
+					/> */}
+
+					{/* <URL_form_wrapper
+						name="Facebook"
+						value={content.Facebook}
+					/>
+
+					<URL_form_wrapper
+						name="Booking"
+						value={content.Booking}
+					/>
+
+					<URL_form_wrapper
+						name="Website"
+						value={content.Website}
 					/> */}
 
 					<div>
@@ -258,65 +273,43 @@ export default function Dashboard({ params }) {
 
 							<Test
 								name="Instagram"
-								value={content.sm_ig}
+								value={content.Instagram}
 								type="url"
 							/>
-
-							{/* {content.sm_ig ? (
-								<IconEdit
-									stroke={1}
-									size={44}
-									className="p-2"
-								/>
-							) : (
-								<IconPlus
-									stroke={1}
-									size={44}
-									className="p-2"
-								/>
-							)} */}
 						</div>
 
-						{content.sm_ig && (
+						{content.Instagram && (
 							<Link
-								href={content.sm_ig}
+								href={content.Instagram}
 								target="_blank"
 								className="italic underline underline-offset-2"
 							>
-								{content.sm_ig}
+								{content.Instagram}
 							</Link>
 						)}
 					</div>
 
-					<Social_m_form
-						form_name="Facebook"
-						type="url"
-						value={null}
-					/>
+					{/* <div>
+						<div className="flex justify-between items-center">
+							<p>Facebook</p>
 
-					<Social_m_form
-						form_name="Booking"
-						type="url"
-						value={null}
-					/>
+							<Test
+								name="Facebook"
+								value={content.Facebook}
+								type="url"
+							/>
+						</div>
 
-					<Social_m_form
-						form_name="Website"
-						type="url"
-						value={null}
-					/>
-
-					<Social_m_form
-						form_name="Email"
-						type="email"
-						value={null}
-					/>
-
-					<Social_m_form
-						form_name="Phone"
-						type="tel"
-						value={null}
-					/>
+						{content.Facebook && (
+							<Link
+								href={content.Facebook}
+								target="_blank"
+								className="italic underline underline-offset-2"
+							>
+								{content.Facebook}
+							</Link>
+						)}
+					</div> */}
 				</article>
 			</section>
 		</main>

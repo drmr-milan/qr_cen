@@ -1,178 +1,123 @@
 "use client";
 
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { IconCheck } from "@tabler/icons-react";
-import { IconX } from "@tabler/icons-react";
-import { IconRestore } from "@tabler/icons-react";
+import Link from "next/link";
+
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 
-// import useSWR, { mutate } from "swr";
-// const fetcher = (...args) => fetch(...args).then((res) => res.json());
+import * as z from "zod";
 
-export function Social_m_form({ form_name, type, value }) {
+import { zodResolver } from "@hookform/resolvers/zod";
+// import { URL_schema } from "@/lib/ValidationShemas";
+
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { useToast } from "@/components/ui/use-toast";
+import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger, DialogClose } from "@/components/ui/dialog";
+
+import { IconEdit, IconPlus } from "@tabler/icons-react";
+
+const URL_schema = z.object({
+	Instagram: z.string(),
+	Facebook: z.string().url({ message: "Mora biti isptava link" }).max(100, { message: "Link ne može biti duži od 100 karaktera" }),
+});
+
+export function URL_form_wrapper({ name, value }) {
+	const form = useForm({ resolver: zodResolver(URL_schema) });
+	const { toast } = useToast();
+	const [open, setOpen] = useState(false);
+
+	function onSubmit(data) {
+		console.log(data);
+
+		// e.preventDefault();
+
+		setOpen(false);
+
+		toast({
+			title: "You submitted the following values:",
+			description: (
+				<pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+					<code className="text-white">{JSON.stringify(data, null, 2)}</code>
+				</pre>
+			),
+		});
+	}
+
 	return (
-		<form
-			className="relative my-4"
-			onSubmit={async (e) => {
-				e.preventDefault();
+		<div>
+			<div className="flex justify-between items-center">
+				<p>{name}</p>
 
-				console.log(e.target[form_name].value);
-			}}
-		>
-			<Label
-				htmlFor={form_name}
-				className="bg-gray-200 px-1 absolute top-[-1rem] left-2 text-base font-normal"
-			>
-				{form_name}
-			</Label>
-
-			<div className="flex gap-2 items-center">
-				<Input
-					key={form_name}
-					type={type}
-					id={form_name}
-					placeholder={form_name}
-					className="bg-transparent border-[1px] border-gray-900 text-base flex-grow"
-					defaultValue={value}
-				/>
-
-				<button
-					type="button"
-					onClick={() => (document.getElementById(form_name).value = value)}
+				<Dialog
+					open={open}
+					onOpenChange={setOpen}
 				>
-					<IconRestore
-						size={44}
-						stroke={1}
-						className="p-2"
-					/>
-				</button>
-
-				<button type="submit">
-					<IconCheck
-						size={44}
-						stroke={1}
-						className="p-2"
-					/>
-				</button>
+					<DialogTrigger asChild>
+						{value ? (
+							"edit" && (
+								<IconEdit
+									stroke={1}
+									size={44}
+									className="p-2"
+								/>
+							)
+						) : (
+							<IconPlus
+								stroke={1}
+								size={44}
+								className="p-2"
+							/>
+						)}
+					</DialogTrigger>
+					<DialogContent className="sm:max-w-[425px]">
+						<DialogHeader>
+							<DialogTitle>Izmjena - {name} linka</DialogTitle>
+						</DialogHeader>
+						<Form {...form}>
+							<form
+								onSubmit={form.handleSubmit(onSubmit)}
+								id={`${name}_form`}
+							>
+								<FormField
+									control={form.control}
+									name={name}
+									defaultValue={value || ""}
+									type="url"
+									render={({ field }) => (
+										<FormItem>
+											<FormControl>
+												<Input {...field} />
+											</FormControl>
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
+								<Button
+									type="submit"
+									form={`${name}_form`}
+								>
+									Sačuvaj
+								</Button>
+							</form>
+						</Form>
+						<DialogFooter>
+							<DialogClose>Odustani</DialogClose>
+						</DialogFooter>
+					</DialogContent>
+				</Dialog>
 			</div>
-		</form>
-	);
-}
 
-export function About_form({ local_id }) {
-	const { data, error, isLoading } = useSWR(`http://0.0.0.0:3000/api/admin/about?local_id=${local_id}`, fetcher);
-
-	if (isLoading) return <p>Loading...</p>;
-
-	const { content } = data;
-
-	console.log(content);
-
-	return (
-		<form
-			className="relative mt-4"
-			onSubmit={async (e) => {
-				e.preventDefault();
-
-				const send_req = await fetch("http://0.0.0.0:3000/api/admin/about", {
-					method: "POST",
-					body: JSON.stringify({ local_id, about: e.target.about.value }),
-				});
-
-				console.log(send_req.status);
-
-				const resp = await send_req.json();
-
-				console.log(resp);
-
-				mutate(`http://0.0.0.0:3000/api/admin/about?local_id=${local_id}`);
-			}}
-		>
-			<Label
-				htmlFor="about"
-				className="bg-gray-200 px-1 absolute top-[-1rem] left-2 text-base font-normal"
-			>
-				Opis
-			</Label>
-
-			<Textarea
-				id="about"
-				name="about"
-				defaultValue={content}
-				className="bg-transparent border-[1px] border-gray-900 text-base flex-grow h-[15rem] resize-none"
-				// onInput={(e) => setState(e.target.value.length)}
-				maxLength="300"
-			/>
-
-			{/* <p className="bg-gray-200 px-1 pb-1 absolute top-0 right-2 text-sm font-normal translate-y-[-50%]">{state} / 300</p> */}
-
-			<div className="flex gap-2 justify-end">
-				<button
-					type="button"
-					onClick={() => (document.getElementById("about").value = content)}
+			{value && (
+				<Link
+					href={value}
+					target="_blank"
+					className="italic underline underline-offset-2"
 				>
-					<IconRestore
-						size={44}
-						stroke={1}
-						className="p-2"
-					/>
-				</button>
-
-				<button type="submit">
-					<IconCheck
-						size={44}
-						stroke={1}
-						className="p-2"
-					/>
-				</button>
-			</div>
-		</form>
-	);
-}
-
-export function Work_hours_form({ day_of_week }) {
-	return (
-		<form id={`form_${day_of_week}`}>
-			<Label className="text-base font-normal">{day_of_week.split("_")[0]}</Label>
-
-			<div className="flex gap-2 items-center justify-between">
-				<div className="flex flex-grow gap-2">
-					<Input
-						type="time"
-						name="time_from"
-						placeholder="od"
-						className="bg-transparent p-0 border-transparent border-b-[1px] border-b-gray-900 text-base flex-grow rounded-none"
-						defaultValue="07:30"
-					/>
-					<Input
-						type="time"
-						name="time_to"
-						placeholder="do"
-						className="bg-transparent p-0 border-transparent border-b-[1px] border-b-gray-900 text-base flex-grow rounded-none"
-						defaultValue=""
-					/>
-				</div>
-
-				<div className="flex gap-2 items-center">
-					{/* //TODO Create new form with id to set null values in db */}
-					<button type="button">
-						<IconX
-							size={44}
-							stroke={1}
-							className="p-2"
-						/>
-					</button>
-					<button type="submit">
-						<IconCheck
-							size={44}
-							stroke={1}
-							className="p-2"
-						/>
-					</button>
-				</div>
-			</div>
-		</form>
+					{value}
+				</Link>
+			)}
+		</div>
 	);
 }
