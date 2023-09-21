@@ -189,7 +189,7 @@ export default function SM_email_form({ local_id, name, value }) {
 							variant="destructive"
 							form={`${name}_form_remove`}
 						>
-							Ukloni link
+							Ukloni email
 						</Button>
 					)}
 

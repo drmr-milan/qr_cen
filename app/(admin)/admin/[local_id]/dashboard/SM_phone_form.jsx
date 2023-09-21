@@ -189,7 +189,7 @@ export default function SM_phone_form({ local_id, name, value }) {
 							variant="destructive"
 							form={`${name}_form_remove`}
 						>
-							Ukloni link
+							Ukloni telefon
 						</Button>
 					)}
 
