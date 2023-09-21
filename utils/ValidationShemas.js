@@ -32,7 +32,7 @@ const SM_phone_schema = z.object({
 
 const SM_patch_schema = z.object({
 	local_id: z.string(),
-	new_link_field: z.enum(["Instagram", "Facebook", "Boking", "Website", "Email", "Telefon"]),
+	new_link_field: z.enum(["Instagram", "Facebook", "Booking", "Website", "Email", "Telefon"]),
 });
 
 export function SM_put_validate({ incoming_data }) {
@@ -45,4 +45,21 @@ export function SM_put_validate({ incoming_data }) {
 
 export function SM_patch_validate({ incoming_data }) {
 	return SM_patch_schema.parse(incoming_data);
+}
+
+export const About_schema = z.object({
+	about_value: z.string().max(300, { message: "Max 300 karaktera" }),
+});
+
+//* ============================================= //
+//* ========= SET VALUE NULL VALIDATION ========= //
+//* ============================================= //
+
+export const Set_value_null_schema = z.object({
+	local_id: z.string(),
+	col_name: z.enum(["instagram", "facebook", "booking", "website", "email", "telefon", "about"]),
+});
+
+export function Set_value_null_validation({ incoming_data }) {
+	return Set_value_null_schema.parse(incoming_data);
 }

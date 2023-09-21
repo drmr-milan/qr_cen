@@ -14,6 +14,7 @@ import { Email_schema, Phone_schema, URL_schema } from "@/utils/ValidationShemas
 import { Info_free, Info_paid, Info_paid_exired } from "./Info_elements";
 
 import useSWR from "swr";
+import About_wrapper from "./About_wrapper";
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
 export default function Dashboard({ params }) {
@@ -256,25 +257,11 @@ export default function Dashboard({ params }) {
 					<Work_hours_form day_of_week="Subota" />
 					<Work_hours_form day_of_week="Nedelja" /> */}
 
-					<div className="flex justify-between items-center">
-						<p>Opis</p>
-
-						{content.about ? (
-							<IconEdit
-								stroke={1}
-								size={44}
-								className="p-2"
-							/>
-						) : (
-							<IconPlus
-								stroke={1}
-								size={44}
-								className="p-2"
-							/>
-						)}
-					</div>
-
-					{content.about && <p className="whitespace-pre-wrap">{content.about}</p>}
+					<About_wrapper
+						local_id={params.local_id}
+						value={content.about}
+						key="about_element"
+					/>
 
 					{/* <About_form
 						value={content.about}
