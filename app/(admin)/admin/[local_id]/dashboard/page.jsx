@@ -34,7 +34,7 @@ export default function Dashboard({ params }) {
 			<p className="text-center text-xl font-semibold mb-6">{content.name}l</p>
 
 			<section className="grid grid-cols-2 md:grid-cols-4">
-				<article className="px-4 pt-4 pb-6 m-4 rounded-md col-span-2 border-[1px] border-gray-900">
+				<article className="px-4 pt-4 pb-6 m-4 rounded-md col-span-2 border-[1px] border-gray-900 shadow-md">
 					<p className="text-center font-semibold mb-6">Info</p>
 
 					{content.package === "Besplatan" && <Info_free name={content.name} />}
@@ -46,7 +46,7 @@ export default function Dashboard({ params }) {
 					)}
 				</article>
 
-				<article className="flex flex-col gap-4 px-4 pt-4 pb-6 m-4 rounded-md text-center col-span-2 border-[1px] border-gray-900">
+				<article className="flex flex-col gap-4 px-4 pt-4 pb-6 m-4 rounded-md text-center col-span-2 border-[1px] border-gray-900 shadow-md">
 					<p className="font-semibold mb-2">Pregledi ____</p>
 
 					<div className="flex gap-4 items-center justify-center">
@@ -80,7 +80,7 @@ export default function Dashboard({ params }) {
 					</div>
 				</article>
 
-				<article className="px-4 pt-4 pb-6 m-4 rounded-md col-span-2 border-[1px] border-gray-900">
+				<article className="px-4 pt-4 pb-6 m-4 rounded-md col-span-2 border-[1px] border-gray-900 shadow-md">
 					<p className="font-semibold mb-6 text-center">Karta pica</p>
 
 					<div className="flex flex-wrap justify-evenly">
@@ -141,7 +141,7 @@ export default function Dashboard({ params }) {
 					</div>
 				</article>
 
-				<article className="px-4 pt-4 pb-6 m-4 rounded-md col-span-2 border-[1px] border-gray-900">
+				<article className="px-4 pt-4 pb-6 m-4 rounded-md col-span-2 border-[1px] border-gray-900 shadow-md">
 					<p className="font-semibold mb-6 text-center">Meni</p>
 
 					<div className="flex flex-wrap justify-evenly">
@@ -202,15 +202,15 @@ export default function Dashboard({ params }) {
 					</div>
 				</article>
 
-				<article className="px-4 pt-4 pb-6 m-4 rounded-md col-span-1 border-[1px] border-gray-900">
+				<article className="px-4 pt-4 pb-6 m-4 rounded-md col-span-1 border-[1px] border-gray-900 shadow-md">
 					<p className="font-semibold mb-6 text-center">Promocije</p>
 				</article>
 
-				<article className="px-4 pt-4 pb-6 m-4 rounded-md col-span-1 border-[1px] border-gray-900">
+				<article className="px-4 pt-4 pb-6 m-4 rounded-md col-span-1 border-[1px] border-gray-900 shadow-md">
 					<p className="font-semibold mb-6 text-center">Dešavanja</p>
 				</article>
 
-				<article className="flex flex-col gap-4 px-4 pt-4 pb-6 m-4 rounded-md col-span-2 border-[1px] border-gray-900">
+				<article className="flex flex-col gap-4 px-4 pt-4 pb-6 m-4 rounded-md col-span-2 border-[1px] border-gray-900 shadow-md">
 					<p className="font-semibold mb-2 text-center">Vise informacija</p>
 
 					<div>
@@ -367,7 +367,7 @@ export default function Dashboard({ params }) {
 					</div>
 				</article>
 
-				<article className="flex flex-col gap-2 px-4 pt-4 pb-6 m-4 rounded-md col-span-2 border-[1px] border-gray-900">
+				<article className="flex flex-col gap-2 px-4 pt-4 pb-6 m-4 rounded-md col-span-2 border-[1px] border-gray-900 shadow-md">
 					<p className="font-semibold mb-6 text-center">Linkovi</p>
 
 					<div className="truncate">
