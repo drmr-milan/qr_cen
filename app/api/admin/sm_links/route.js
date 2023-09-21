@@ -3,9 +3,10 @@ import promisePool from "@/lib/database";
 import { SM_patch_validate, SM_put_validate } from "@/utils/ValidationShemas";
 
 export async function PUT(req, { params }) {
-	const incoming_data = await req.json();
+	const incoming_data = null;
 
 	try {
+		incoming_data = await req.json();
 		SM_put_validate({ incoming_data });
 	} catch (error) {
 		console.error(error);
@@ -32,9 +33,10 @@ export async function PUT(req, { params }) {
 }
 
 export async function PATCH(req, { params }) {
-	const incoming_data = await req.json();
+	const incoming_data = null;
 
 	try {
+		incoming_data = await req.json();
 		SM_patch_validate({ incoming_data });
 	} catch (error) {
 		console.error(error);
