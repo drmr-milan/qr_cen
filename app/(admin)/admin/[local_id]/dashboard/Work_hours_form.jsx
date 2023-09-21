@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { mutate } from "swr";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Email_schema, Set_value_null_schema } from "@/utils/ValidationShemas";
+import { Work_hours_schema, Work_hours_remove_schema } from "@/utils/ValidationShemas";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -17,9 +17,9 @@ import { IconEdit, IconPlus } from "@tabler/icons-react";
 
 const fecher = (...args) => fetch(...args).then((res) => res.json());
 
-export default function SM_email_form({ local_id, name, value }) {
-	const form = useForm({ resolver: zodResolver(Email_schema) });
-	const form_remove = useForm({ resolver: zodResolver(Set_value_null_schema) });
+export default function Work_hours_form({ local_id, day_of_week, display_name, from_time, to_time }) {
+	const form = useForm({ resolver: zodResolver(Work_hours_schema) });
+	const form_remove = useForm({ resolver: zodResolver(Work_hours_remove_schema) });
 	const { toast } = useToast();
 	const [open, setOpen] = useState(false);
 
@@ -27,13 +27,19 @@ export default function SM_email_form({ local_id, name, value }) {
 		setOpen(false);
 
 		toast({
-			title: `Izmjena - email-a`,
+			title: `Izmjena - radnog vremena - ${display_name}`,
 			description: <p>U toku</p>,
 		});
 
-		const send_data = await fecher("/api/admin/sm_email", {
+		const send_data = await fecher("/api/admin/work_hours", {
 			method: "PUT",
-			body: JSON.stringify({ local_id: data.local_id, col_name: data.col_name, new_value: data.new_value }),
+			body: JSON.stringify({
+				local_id: data.local_id,
+				col_name_from: data.col_name_from,
+				new_value_from: data.new_value_from,
+				col_name_to: data.col_name_to,
+				new_value_to: data.new_value_to,
+			}),
 		}).catch((error) => {
 			console.log(error);
 			alert("Došlo je do greške.");
@@ -41,7 +47,7 @@ export default function SM_email_form({ local_id, name, value }) {
 		});
 
 		toast({
-			title: `Izmjena - email-a`,
+			title: `Izmjena - radnog vremena - ${display_name}`,
 			description: <p>Uspjesno izmjenjeno</p>,
 		});
 
@@ -52,13 +58,13 @@ export default function SM_email_form({ local_id, name, value }) {
 		setOpen(false);
 
 		toast({
-			title: `Brisanje - email-a`,
+			title: `Brisanje - radnog vremena - ${display_name}`,
 			description: <p>U toku</p>,
 		});
 
-		const send_data = await fecher("/api/admin/set_value_null", {
+		const send_data = await fecher("/api/admin/work_hours", {
 			method: "PATCH",
-			body: JSON.stringify({ local_id: data.local_id, col_name: data.col_name }),
+			body: JSON.stringify({ local_id: data.local_id, col_name_from: data.col_name_from, col_name_to: data.col_name_to }),
 		}).catch((error) => {
 			console.log(error);
 			alert("Došlo je do greške.");
@@ -66,7 +72,7 @@ export default function SM_email_form({ local_id, name, value }) {
 		});
 
 		toast({
-			title: `Brisanje - email-a`,
+			title: `Brisanje - radnog vremena - ${display_name}`,
 			description: <p>Uspjesno</p>,
 		});
 
@@ -79,7 +85,7 @@ export default function SM_email_form({ local_id, name, value }) {
 			onOpenChange={setOpen}
 		>
 			<DialogTrigger asChild>
-				{value ? (
+				{from_time ? (
 					"edit" && (
 						<IconEdit
 							stroke={1}
@@ -97,12 +103,13 @@ export default function SM_email_form({ local_id, name, value }) {
 			</DialogTrigger>
 			<DialogContent className="sm:max-w-[425px]">
 				<DialogHeader>
-					<DialogTitle>Izmjena - {name} linka</DialogTitle>
+					<DialogTitle>Izmjena - radnog vremena - {display_name}</DialogTitle>
 				</DialogHeader>
 				<Form {...form}>
 					<form
 						onSubmit={form.handleSubmit(onSubmit)}
-						id={`${name}_form`}
+						id={`${day_of_week}_form`}
+						className="flex gap-2 justify-center"
 					>
 						<FormField
 							name="local_id"
@@ -117,8 +124,8 @@ export default function SM_email_form({ local_id, name, value }) {
 							)}
 						/>
 						<FormField
-							name="col_name"
-							defaultValue={name}
+							name="col_name_from"
+							defaultValue={`${day_of_week}_from`}
 							render={({ field }) => (
 								<FormItem>
 									<Input
@@ -130,8 +137,8 @@ export default function SM_email_form({ local_id, name, value }) {
 						/>
 						<FormField
 							control={form.control}
-							name="new_value"
-							defaultValue={value || ""}
+							name="new_value_from"
+							defaultValue={from_time || ""}
 							render={({ field }) => (
 								<FormItem>
 									<FormControl>
@@ -139,7 +146,39 @@ export default function SM_email_form({ local_id, name, value }) {
 											{...field}
 											placeholder="test@test.test"
 											autoComplete="off"
-											type="email"
+											type="time"
+											required
+										/>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							name="col_name_to"
+							defaultValue={`${day_of_week}_to`}
+							render={({ field }) => (
+								<FormItem>
+									<Input
+										{...field}
+										className="hidden"
+									/>
+								</FormItem>
+							)}
+						/>
+						<FormField
+							control={form.control}
+							name="new_value_to"
+							defaultValue={to_time || ""}
+							render={({ field }) => (
+								<FormItem>
+									<FormControl>
+										<Input
+											{...field}
+											placeholder="test@test.test"
+											autoComplete="off"
+											type="time"
+											required
 										/>
 									</FormControl>
 									<FormMessage />
@@ -152,7 +191,7 @@ export default function SM_email_form({ local_id, name, value }) {
 				<Form {...form_remove}>
 					<form
 						onSubmit={form_remove.handleSubmit(onSubmit_remove)}
-						id={`${name}_form_remove`}
+						id={`${day_of_week}_form_remove`}
 						className="hidden"
 					>
 						<FormField
@@ -165,8 +204,17 @@ export default function SM_email_form({ local_id, name, value }) {
 							)}
 						/>
 						<FormField
-							name="col_name"
-							defaultValue={name}
+							name="col_name_from"
+							defaultValue={`${day_of_week}_from`}
+							render={({ field }) => (
+								<FormItem>
+									<Input {...field} />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							name="col_name_to"
+							defaultValue={`${day_of_week}_to`}
 							render={({ field }) => (
 								<FormItem>
 									<Input {...field} />
@@ -178,18 +226,18 @@ export default function SM_email_form({ local_id, name, value }) {
 				<DialogFooter className="grid gap-2">
 					<Button
 						type="submit"
-						form={`${name}_form`}
+						form={`${day_of_week}_form`}
 					>
 						Sačuvaj
 					</Button>
 
-					{value && (
+					{from_time && (
 						<Button
 							type="submit"
 							variant="destructive"
-							form={`${name}_form_remove`}
+							form={`${day_of_week}_form_remove`}
 						>
-							Ukloni email
+							Ukloni
 						</Button>
 					)}
 

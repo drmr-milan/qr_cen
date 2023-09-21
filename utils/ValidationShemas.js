@@ -68,3 +68,29 @@ export const Phone_schema = z.object({
 export function Phone_schema_validation({ incoming_data }) {
 	return Phone_schema.parse(incoming_data);
 }
+
+//* ============================================= //
+//* =========== WORK HOURS VALIDATION =========== //
+//* ============================================= //
+
+export const Work_hours_schema = z.object({
+	local_id: z.string(),
+	col_name_from: z.enum(["monday_from", "tuesday_from", "wednesday_from", "thursday_from", "friday_from", "saturday_from", "sunday_from"]),
+	new_value_from: z.string(),
+	col_name_to: z.enum(["monday_to", "tuesday_to", "wednesday_to", "thursday_to", "friday_to", "saturday_to", "sunday_to"]),
+	new_value_to: z.string(),
+});
+
+export function Work_hours_validation({ incoming_data }) {
+	return Work_hours_schema.parse(incoming_data);
+}
+
+export const Work_hours_remove_schema = z.object({
+	local_id: z.string(),
+	col_name_from: z.enum(["monday_from", "tuesday_from", "wednesday_from", "thursday_from", "friday_from", "saturday_from", "sunday_from"]),
+	col_name_to: z.enum(["monday_to", "tuesday_to", "wednesday_to", "thursday_to", "friday_to", "saturday_to", "sunday_to"]),
+});
+
+export function Work_hours_remove_validation({ incoming_data }) {
+	return Work_hours_remove_schema.parse(incoming_data);
+}

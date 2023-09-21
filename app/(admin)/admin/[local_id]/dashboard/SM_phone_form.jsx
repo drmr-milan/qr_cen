@@ -27,7 +27,7 @@ export default function SM_phone_form({ local_id, name, value }) {
 		setOpen(false);
 
 		toast({
-			title: `Izmjena - ${name} linka`,
+			title: `Izmjena - telefona`,
 			description: <p>U toku</p>,
 		});
 
@@ -41,7 +41,7 @@ export default function SM_phone_form({ local_id, name, value }) {
 		});
 
 		toast({
-			title: `Izmjena - ${name} linka`,
+			title: `Izmjena - telefona`,
 			description: <p>Uspjesno izmjenjeno</p>,
 		});
 
@@ -52,7 +52,7 @@ export default function SM_phone_form({ local_id, name, value }) {
 		setOpen(false);
 
 		toast({
-			title: `Brisanje - Opisa`,
+			title: `Brisanje - telefona`,
 			description: <p>U toku</p>,
 		});
 
@@ -66,7 +66,7 @@ export default function SM_phone_form({ local_id, name, value }) {
 		});
 
 		toast({
-			title: `Brisanje - Opisa`,
+			title: `Brisanje - telefona`,
 			description: <p>Uspjesno</p>,
 		});
 

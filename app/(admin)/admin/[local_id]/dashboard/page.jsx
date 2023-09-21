@@ -16,6 +16,7 @@ import SM_url_form from "./SM_url_form";
 import { IconPencil } from "@tabler/icons-react";
 import SM_email_form from "./SM_email_form";
 import SM_phone_form from "./SM_phone_form";
+import Work_hours_form from "./Work_hours_form";
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
@@ -212,13 +213,145 @@ export default function Dashboard({ params }) {
 				<article className="flex flex-col gap-4 px-4 pt-4 pb-6 m-4 rounded-md col-span-2 border-[1px] border-gray-900">
 					<p className="font-semibold mb-2 text-center">Vise informacija</p>
 
-					{/* <Work_hours_form day_of_week="Ponedeljak" />
-					<Work_hours_form day_of_week="Utorak" />
-					<Work_hours_form day_of_week="Srijeda" />
-					<Work_hours_form day_of_week="Četvrtak" />
-					<Work_hours_form day_of_week="Petak" />
-					<Work_hours_form day_of_week="Subota" />
-					<Work_hours_form day_of_week="Nedelja" /> */}
+					<div>
+						<div className="flex justify-between items-center">
+							<p>Ponedeljak</p>
+
+							<Work_hours_form
+								local_id={params.local_id}
+								day_of_week="monday"
+								display_name="ponedeljak"
+								from_time={content.monday_from}
+								to_time={content.monday_to}
+							/>
+						</div>
+
+						{content.monday_from && (
+							<p className="italic">
+								{content.monday_from.substring(0, 5)} - {content.monday_to.substring(0, 5)}
+							</p>
+						)}
+					</div>
+
+					<div>
+						<div className="flex justify-between items-center">
+							<p>Utorak</p>
+
+							<Work_hours_form
+								local_id={params.local_id}
+								day_of_week="tuesday"
+								display_name="utorak"
+								from_time={content.tuesday_from}
+								to_time={content.tuesday_to}
+							/>
+						</div>
+
+						{content.tuesday_from && (
+							<p className="italic">
+								{content.tuesday_from.substring(0, 5)} - {content.tuesday_to.substring(0, 5)}
+							</p>
+						)}
+					</div>
+
+					<div>
+						<div className="flex justify-between items-center">
+							<p>Srijeda</p>
+
+							<Work_hours_form
+								local_id={params.local_id}
+								day_of_week="wednesday"
+								display_name="srijeda"
+								from_time={content.wednesday_from}
+								to_time={content.wednesday_to}
+							/>
+						</div>
+
+						{content.wednesday_from && (
+							<p className="italic">
+								{content.wednesday_from.substring(0, 5)} - {content.wednesday_to.substring(0, 5)}
+							</p>
+						)}
+					</div>
+
+					<div>
+						<div className="flex justify-between items-center">
+							<p>Četvrtak</p>
+
+							<Work_hours_form
+								local_id={params.local_id}
+								day_of_week="thursday"
+								display_name="četvrtak"
+								from_time={content.thursday_from}
+								to_time={content.thursday_to}
+							/>
+						</div>
+
+						{content.thursday_from && (
+							<p className="italic">
+								{content.thursday_from.substring(0, 5)} - {content.thursday_to.substring(0, 5)}
+							</p>
+						)}
+					</div>
+
+					<div>
+						<div className="flex justify-between items-center">
+							<p>Petak</p>
+
+							<Work_hours_form
+								local_id={params.local_id}
+								day_of_week="friday"
+								display_name="petak"
+								from_time={content.friday_from}
+								to_time={content.friday_to}
+							/>
+						</div>
+
+						{content.friday_from && (
+							<p className="italic">
+								{content.friday_from.substring(0, 5)} - {content.friday_to.substring(0, 5)}
+							</p>
+						)}
+					</div>
+
+					<div>
+						<div className="flex justify-between items-center">
+							<p>Subota</p>
+
+							<Work_hours_form
+								local_id={params.local_id}
+								day_of_week="saturday"
+								display_name="subota"
+								from_time={content.saturday_from}
+								to_time={content.saturday_to}
+							/>
+						</div>
+
+						{content.saturday_from && (
+							<p className="italic">
+								{content.saturday_from.substring(0, 5)} - {content.saturday_to.substring(0, 5)}
+							</p>
+						)}
+					</div>
+
+					<div>
+						<div className="flex justify-between items-center">
+							<p>Nedelja</p>
+
+							<Work_hours_form
+								local_id={params.local_id}
+								day_of_week="sunday"
+								display_name="nedelja"
+								from_time={content.sunday_from}
+								to_time={content.sunday_to}
+							/>
+						</div>
+
+						{content.sunday_from && (
+							<p className="italic">
+								{content.sunday_from.substring(0, 5)} - {content.sunday_to.substring(0, 5)}
+							</p>
+						)}
+					</div>
 
 					<div>
 						<div className="flex justify-between items-center">
@@ -230,7 +363,7 @@ export default function Dashboard({ params }) {
 							/>
 						</div>
 
-						{content.about && <p className="whitespace-pre-wrap">{content.about}</p>}
+						{content.about && <p className="whitespace-pre-wrap italic">{content.about}</p>}
 					</div>
 				</article>
 
