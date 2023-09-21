@@ -47,9 +47,9 @@ export function SM_patch_validate({ incoming_data }) {
 	return SM_patch_schema.parse(incoming_data);
 }
 
-export const About_schema = z.object({
-	about_value: z.string().max(300, { message: "Max 300 karaktera" }),
-});
+// export const About_schema = z.object({
+// 	about_value: z.string().max(300, { message: "Max 300 karaktera" }),
+// });
 
 //* ============================================= //
 //* ========= SET VALUE NULL VALIDATION ========= //
@@ -62,4 +62,18 @@ export const Set_value_null_schema = z.object({
 
 export function Set_value_null_validation({ incoming_data }) {
 	return Set_value_null_schema.parse(incoming_data);
+}
+
+//* ============================================ //
+//* ============= ABOUT VALIDATION ============= //
+//* ============================================ //
+
+export const About_schema = z.object({
+	local_id: z.string(),
+	col_name: z.enum(["about"]),
+	new_value: z.string().max(300, { message: "Max 300 karaktera" }),
+});
+
+export function About_schema_validate({ incoming_data }) {
+	return About_schema.parse(incoming_data);
 }

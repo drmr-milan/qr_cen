@@ -25,7 +25,7 @@ export default function About_form({ local_id, value }) {
 	const [open, setOpen] = useState(false);
 
 	async function onSubmit(data) {
-		// console.log();
+		console.log(data);
 
 		setOpen(false);
 
@@ -36,7 +36,7 @@ export default function About_form({ local_id, value }) {
 
 		const send_data = await fecher("/api/admin/about", {
 			method: "PUT",
-			body: JSON.stringify({ local_id, about_value }),
+			body: JSON.stringify({ local_id: data.local_id, col_name: data.col_name, new_value: data.new_value }),
 		}).catch((error) => {
 			console.log(error);
 			alert("Došlo je do greške.");
@@ -100,7 +100,7 @@ export default function About_form({ local_id, value }) {
 			</DialogTrigger>
 			<DialogContent className="sm:max-w-[425px]">
 				<DialogHeader>
-					<DialogTitle>Izmjena - Opis linka</DialogTitle>
+					<DialogTitle className="mb-2">Izmjena - Opisa</DialogTitle>
 				</DialogHeader>
 				<Form {...form}>
 					<form
@@ -108,8 +108,32 @@ export default function About_form({ local_id, value }) {
 						id="about_form"
 					>
 						<FormField
+							name="local_id"
+							defaultValue={local_id}
+							render={({ field }) => (
+								<FormItem>
+									<Input
+										{...field}
+										className="hidden"
+									/>
+								</FormItem>
+							)}
+						/>
+						<FormField
+							name="col_name"
+							defaultValue="about"
+							render={({ field }) => (
+								<FormItem>
+									<Input
+										{...field}
+										className="hidden"
+									/>
+								</FormItem>
+							)}
+						/>
+						<FormField
 							control={form.control}
-							name="about_value"
+							name="new_value"
 							defaultValue={value || ""}
 							render={({ field }) => (
 								<FormItem>
@@ -118,6 +142,7 @@ export default function About_form({ local_id, value }) {
 											{...field}
 											autoComplete="off"
 											type="text"
+											className="h-56 resize-none text-lg"
 										/>
 									</FormControl>
 									<FormMessage />
