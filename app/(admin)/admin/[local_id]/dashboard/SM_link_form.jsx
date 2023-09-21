@@ -23,7 +23,7 @@ export default function SM_link_form({ local_id, name, value, type, schema }) {
 
 	let placeholder = "";
 	if (type === "url") placeholder = "https://";
-	if (type === "phone") placeholder = "065111222";
+	if (type === "tel") placeholder = "065111222";
 
 	async function onSubmit(data) {
 		console.log();
@@ -37,7 +37,7 @@ export default function SM_link_form({ local_id, name, value, type, schema }) {
 
 		const send_data = await fecher("/api/admin/sm_links", {
 			method: "PUT",
-			body: JSON.stringify({ local_id, new_link_field: name, new_link_value: data.new_link }),
+			body: JSON.stringify({ local_id, new_link_field: name, new_link_value: data.new_link, type }),
 		}).catch((error) => {
 			console.log(error);
 			alert("Došlo je do greške.");
