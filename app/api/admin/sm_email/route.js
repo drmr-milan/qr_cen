@@ -1,12 +1,12 @@
 import { NextResponse } from "next/server";
 import promisePool from "@/lib/database";
-import { URL_schema_validation } from "@/utils/ValidationShemas";
+import { Email_schema_validation } from "@/utils/ValidationShemas";
 
 export async function PUT(req) {
 	let incoming_data = null;
 	try {
 		incoming_data = await req.json();
-		URL_schema_validation({ incoming_data });
+		Email_schema_validation({ incoming_data });
 	} catch (error) {
 		console.error(error);
 		return NextResponse.json({ message: "Invalid input data" }, { status: 422 });
@@ -19,8 +19,8 @@ export async function PUT(req) {
 	} catch (error) {
 		db_connection.release();
 		console.log(error);
-		return NextResponse.json({ message: "Error" });
+		return NextResponse.json({ message: "Error" }, { status: 500 });
 	}
 
-	return NextResponse.json({ message: "About updated" }, { status: 200 });
+	return NextResponse.json({ message: `${incoming_data.col_name} data added` }, { status: 200 });
 }

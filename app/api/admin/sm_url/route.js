@@ -19,8 +19,8 @@ export async function PUT(req) {
 	} catch (error) {
 		db_connection.release();
 		console.log(error);
-		return NextResponse.json({ message: "Error" });
+		return NextResponse.json({ message: "Error" }, { status: 500 });
 	}
 
-	return NextResponse.json({ message: "About updated" }, { status: 200 });
+	return NextResponse.json({ message: `${incoming_data.col_name} data added` }, { status: 200 });
 }

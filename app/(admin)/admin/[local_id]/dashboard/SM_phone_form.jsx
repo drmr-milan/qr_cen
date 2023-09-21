@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { mutate } from "swr";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Phone_schema, Set_value_null_schema } from "@/utils/ValidationShemas";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -16,18 +17,13 @@ import { IconEdit, IconPlus } from "@tabler/icons-react";
 
 const fecher = (...args) => fetch(...args).then((res) => res.json());
 
-export default function SM_link_form({ local_id, name, value, type, schema }) {
-	const form = useForm({ resolver: zodResolver(schema) });
+export default function SM_phone_form({ local_id, name, value }) {
+	const form = useForm({ resolver: zodResolver(Phone_schema) });
+	const form_remove = useForm({ resolver: zodResolver(Set_value_null_schema) });
 	const { toast } = useToast();
 	const [open, setOpen] = useState(false);
 
-	let placeholder = "";
-	if (type === "url") placeholder = "https://";
-	if (type === "tel") placeholder = "065111222";
-
 	async function onSubmit(data) {
-		console.log();
-
 		setOpen(false);
 
 		toast({
@@ -35,9 +31,9 @@ export default function SM_link_form({ local_id, name, value, type, schema }) {
 			description: <p>U toku</p>,
 		});
 
-		const send_data = await fecher("/api/admin/sm_links", {
+		const send_data = await fecher("/api/admin/sm_phone", {
 			method: "PUT",
-			body: JSON.stringify({ local_id, new_link_field: name, new_link_value: data.new_link, type }),
+			body: JSON.stringify({ local_id: data.local_id, col_name: data.col_name, new_value: data.new_value }),
 		}).catch((error) => {
 			console.log(error);
 			alert("Došlo je do greške.");
@@ -52,17 +48,17 @@ export default function SM_link_form({ local_id, name, value, type, schema }) {
 		mutate(`http://0.0.0.0:3000/api/admin/dashboard/${local_id}`);
 	}
 
-	async function onSubmit_remove() {
+	async function onSubmit_remove(data) {
 		setOpen(false);
 
 		toast({
-			title: `Izmjena - ${name} linka`,
+			title: `Brisanje - Opisa`,
 			description: <p>U toku</p>,
 		});
 
-		const send_data = await fecher("/api/admin/sm_links", {
+		const send_data = await fecher("/api/admin/set_value_null", {
 			method: "PATCH",
-			body: JSON.stringify({ local_id, new_link_field: name }),
+			body: JSON.stringify({ local_id: data.local_id, col_name: data.col_name }),
 		}).catch((error) => {
 			console.log(error);
 			alert("Došlo je do greške.");
@@ -70,8 +66,8 @@ export default function SM_link_form({ local_id, name, value, type, schema }) {
 		});
 
 		toast({
-			title: `Izmjena - ${name} linka`,
-			description: <p>Uspjesno uklonjen</p>,
+			title: `Brisanje - Opisa`,
+			description: <p>Uspjesno</p>,
 		});
 
 		mutate(`http://0.0.0.0:3000/api/admin/dashboard/${local_id}`);
@@ -109,17 +105,41 @@ export default function SM_link_form({ local_id, name, value, type, schema }) {
 						id={`${name}_form`}
 					>
 						<FormField
+							name="local_id"
+							defaultValue={local_id}
+							render={({ field }) => (
+								<FormItem>
+									<Input
+										{...field}
+										className="hidden"
+									/>
+								</FormItem>
+							)}
+						/>
+						<FormField
+							name="col_name"
+							defaultValue={name}
+							render={({ field }) => (
+								<FormItem>
+									<Input
+										{...field}
+										className="hidden"
+									/>
+								</FormItem>
+							)}
+						/>
+						<FormField
 							control={form.control}
-							name="new_link"
+							name="new_value"
 							defaultValue={value || ""}
 							render={({ field }) => (
 								<FormItem>
 									<FormControl>
 										<Input
 											{...field}
-											placeholder={placeholder}
+											placeholder="066010232"
 											autoComplete="off"
-											type={type}
+											type="tel"
 										/>
 									</FormControl>
 									<FormMessage />
@@ -129,12 +149,31 @@ export default function SM_link_form({ local_id, name, value, type, schema }) {
 					</form>
 				</Form>
 
-				<Form {...form}>
+				<Form {...form_remove}>
 					<form
-						onSubmit={form.handleSubmit(onSubmit_remove)}
+						onSubmit={form_remove.handleSubmit(onSubmit_remove)}
 						id={`${name}_form_remove`}
 						className="hidden"
-					></form>
+					>
+						<FormField
+							name="local_id"
+							defaultValue={local_id}
+							render={({ field }) => (
+								<FormItem>
+									<Input {...field} />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							name="col_name"
+							defaultValue={name}
+							render={({ field }) => (
+								<FormItem>
+									<Input {...field} />
+								</FormItem>
+							)}
+						/>
+					</form>
 				</Form>
 				<DialogFooter className="grid gap-2">
 					<Button

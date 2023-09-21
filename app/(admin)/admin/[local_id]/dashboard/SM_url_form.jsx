@@ -5,11 +5,10 @@ import { useForm } from "react-hook-form";
 import { mutate } from "swr";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { About_schema, Set_value_null_schema } from "@/utils/ValidationShemas";
+import { Set_value_null_schema, URL_schema } from "@/utils/ValidationShemas";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger, DialogClose } from "@/components/ui/dialog";
@@ -18,8 +17,8 @@ import { IconEdit, IconPlus } from "@tabler/icons-react";
 
 const fecher = (...args) => fetch(...args).then((res) => res.json());
 
-export default function About_form({ local_id, value }) {
-	const form = useForm({ resolver: zodResolver(About_schema) });
+export default function SM_url_form({ local_id, name, value }) {
+	const form = useForm({ resolver: zodResolver(URL_schema) });
 	const form_remove = useForm({ resolver: zodResolver(Set_value_null_schema) });
 	const { toast } = useToast();
 	const [open, setOpen] = useState(false);
@@ -28,11 +27,11 @@ export default function About_form({ local_id, value }) {
 		setOpen(false);
 
 		toast({
-			title: `Izmjena - Opisa`,
+			title: `Izmjena - ${name} linka`,
 			description: <p>U toku</p>,
 		});
 
-		const send_data = await fecher("/api/admin/about", {
+		const send_data = await fecher("/api/admin/sm_url", {
 			method: "PUT",
 			body: JSON.stringify({ local_id: data.local_id, col_name: data.col_name, new_value: data.new_value }),
 		}).catch((error) => {
@@ -42,7 +41,7 @@ export default function About_form({ local_id, value }) {
 		});
 
 		toast({
-			title: `Izmjena - Opisa`,
+			title: `Izmjena - ${name} linka`,
 			description: <p>Uspjesno izmjenjeno</p>,
 		});
 
@@ -98,12 +97,12 @@ export default function About_form({ local_id, value }) {
 			</DialogTrigger>
 			<DialogContent className="sm:max-w-[425px]">
 				<DialogHeader>
-					<DialogTitle className="mb-2">Izmjena - Opisa</DialogTitle>
+					<DialogTitle>Izmjena - {name} linka</DialogTitle>
 				</DialogHeader>
 				<Form {...form}>
 					<form
 						onSubmit={form.handleSubmit(onSubmit)}
-						id="about_form"
+						id={`${name}_form`}
 					>
 						<FormField
 							name="local_id"
@@ -119,7 +118,7 @@ export default function About_form({ local_id, value }) {
 						/>
 						<FormField
 							name="col_name"
-							defaultValue="about"
+							defaultValue={name}
 							render={({ field }) => (
 								<FormItem>
 									<Input
@@ -136,11 +135,11 @@ export default function About_form({ local_id, value }) {
 							render={({ field }) => (
 								<FormItem>
 									<FormControl>
-										<Textarea
+										<Input
 											{...field}
+											placeholder="https://"
 											autoComplete="off"
-											type="text"
-											className="h-56 resize-none text-base"
+											type="url"
 										/>
 									</FormControl>
 									<FormMessage />
@@ -153,7 +152,7 @@ export default function About_form({ local_id, value }) {
 				<Form {...form_remove}>
 					<form
 						onSubmit={form_remove.handleSubmit(onSubmit_remove)}
-						id="about_form_remove"
+						id={`${name}_form_remove`}
 						className="hidden"
 					>
 						<FormField
@@ -167,7 +166,7 @@ export default function About_form({ local_id, value }) {
 						/>
 						<FormField
 							name="col_name"
-							defaultValue="about"
+							defaultValue={name}
 							render={({ field }) => (
 								<FormItem>
 									<Input {...field} />
@@ -179,7 +178,7 @@ export default function About_form({ local_id, value }) {
 				<DialogFooter className="grid gap-2">
 					<Button
 						type="submit"
-						form="about_form"
+						form={`${name}_form`}
 					>
 						Sačuvaj
 					</Button>
@@ -188,9 +187,9 @@ export default function About_form({ local_id, value }) {
 						<Button
 							type="submit"
 							variant="destructive"
-							form="about_form_remove"
+							form={`${name}_form_remove`}
 						>
-							Ukloni opis
+							Ukloni link
 						</Button>
 					)}
 
