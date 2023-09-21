@@ -55,7 +55,7 @@ export default function About_form({ local_id, value }) {
 		setOpen(false);
 
 		toast({
-			title: `Izmjena - Opisa`,
+			title: `Brisanje - Opisa`,
 			description: <p>U toku</p>,
 		});
 
@@ -69,8 +69,8 @@ export default function About_form({ local_id, value }) {
 		});
 
 		toast({
-			title: `Izmjena - Opisa`,
-			description: <p>Uspjesno uklonjen</p>,
+			title: `Brisanje - Opisa`,
+			description: <p>Uspjesno</p>,
 		});
 
 		mutate(`http://0.0.0.0:3000/api/admin/dashboard/${local_id}`);
