@@ -142,7 +142,7 @@ export default function About_form({ local_id, value }) {
 											{...field}
 											autoComplete="off"
 											type="text"
-											className="h-56 resize-none text-lg"
+											className="h-56 resize-none text-base"
 										/>
 									</FormControl>
 									<FormMessage />
