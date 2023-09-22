@@ -6,11 +6,14 @@ export async function GET(req, { params }) {
 	let content = null;
 
 	try {
-		[content] = await db_connection.query("SELECT * FROM qr_cen.locals WHERE id = ?;", [params.local_id]);
+		[content] = await db_connection.query(
+			"SELECT *, (SELECT COUNT(id) FROM qr_cen.drinks_cat WHERE local_id = ?) AS drinks_cat, (SELECT COUNT(id) FROM qr_cen.drinks WHERE local_id = ?) AS drinks FROM qr_cen.locals WHERE id = ?;",
+			[params.local_id, params.local_id, params.local_id]
+		);
 
-		await db_connection.release();
+		db_connection.release();
 	} catch (error) {
-		await db_connection.release();
+		db_connection.release();
 		console.log(error);
 		return NextResponse.json({ message: "Error" });
 	}

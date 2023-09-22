@@ -4,16 +4,14 @@ import useSWR from "swr";
 
 import Link from "next/link";
 
-import { format, differenceInCalendarDays } from "date-fns";
+import { differenceInCalendarDays } from "date-fns";
 
-import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Button } from "@/components/ui/button";
 
 import { Info_free, Info_paid, Info_paid_exired } from "./Info_elements";
+
 import About_form from "./About_form";
 import SM_url_form from "./SM_url_form";
-
-import { IconPencil } from "@tabler/icons-react";
 import SM_email_form from "./SM_email_form";
 import SM_phone_form from "./SM_phone_form";
 import Work_hours_form from "./Work_hours_form";
@@ -27,7 +25,7 @@ export default function Dashboard({ params }) {
 
 	const { content } = data;
 
-	// console.log(content);
+	console.log(content);
 
 	return (
 		<main className="flex-grow py-8">
@@ -80,126 +78,60 @@ export default function Dashboard({ params }) {
 					</div>
 				</article>
 
-				<article className="px-4 pt-4 pb-6 m-4 rounded-md col-span-2 border-[1px] border-gray-900 shadow-md">
-					<p className="font-semibold mb-6 text-center">Karta pica</p>
+				<article className="flex flex-col gap-4 px-4 pt-4 pb-6 m-4 rounded-md col-span-2 border-[1px] border-gray-900 shadow-md">
+					<p className="font-semibold text-center">Karta pića</p>
 
-					<div className="flex flex-wrap justify-evenly">
-						<div className="flex items-center mb-4">
-							<p>Katergorija: ___</p>
+					<p className="text-center">
+						Katergorija: {content.drinks_cat}
+						{content.package === "Besplatno" && " od 5"}
+						{content.package === "Plus" && " od 10"}
+					</p>
 
-							<Link href="#">
-								<IconPencil
-									stroke={1}
-									size={46}
-									className="p-2"
-								/>
-							</Link>
-						</div>
+					<p className="text-center">
+						Artikala: {content.drinks}
+						{content.package === "Besplatno" && " od 50"}
+						{content.package === "Plus" && " od 100"}
+					</p>
 
-						<div className="flex items-center mb-4">
-							<p>Artikala: ___</p>
+					<p className="text-center">
+						Način prikazivanja: {content.drinks_images === 0 && "Samo tekst"}
+						{content.drinks_images === 1 && "Sa slikama"}
+					</p>
 
-							<Link href="#">
-								<IconPencil
-									stroke={1}
-									size={46}
-									className="p-2"
-								/>
-							</Link>
-						</div>
-					</div>
-
-					<div className="flex gap-2 justify-center">
-						<p className="mb-2">Način prikazivanja:</p>
-
-						<RadioGroup defaultValue="option-one">
-							<div className="flex items-center space-x-2">
-								<RadioGroupItem
-									value="option-one"
-									id="option-one"
-								/>
-								<Label
-									htmlFor="option-one"
-									className="font-normal text-base"
-								>
-									Samo tekst
-								</Label>
-							</div>
-							<div className="flex items-center space-x-2">
-								<RadioGroupItem
-									value="option-two"
-									id="option-two"
-								/>
-								<Label
-									htmlFor="option-two"
-									className="font-normal text-base"
-								>
-									Sa slikama
-								</Label>
-							</div>
-						</RadioGroup>
-					</div>
+					<Button
+						asChild
+						className="bg-gray-900"
+					>
+						<Link href={`/admin/${params.local_id}/edit_drinks`}>Pregled & izmjene</Link>
+					</Button>
 				</article>
 
-				<article className="px-4 pt-4 pb-6 m-4 rounded-md col-span-2 border-[1px] border-gray-900 shadow-md">
-					<p className="font-semibold mb-6 text-center">Meni</p>
+				<article className="flex flex-col gap-4 px-4 pt-4 pb-6 m-4 rounded-md col-span-2 border-[1px] border-gray-900 shadow-md">
+					<p className="font-semibold text-center">Meni</p>
 
-					<div className="flex flex-wrap justify-evenly">
-						<div className="flex items-center mb-4">
-							<p>Katergorija: ___</p>
+					<p className="text-center">
+						Katergorija: {content.drinks_cat}
+						{content.package === "Besplatno" && " od 5"}
+						{content.package === "Plus" && " od 10"}
+					</p>
 
-							<Link href="#">
-								<IconPencil
-									stroke={1}
-									size={46}
-									className="p-2"
-								/>
-							</Link>
-						</div>
+					<p className="text-center">
+						Artikala: {content.drinks}
+						{content.package === "Besplatno" && " od 50"}
+						{content.package === "Plus" && " od 100"}
+					</p>
 
-						<div className="flex items-center mb-4">
-							<p>Artikala: ___</p>
+					<p className="text-center">
+						Način prikazivanja: {content.drinks_images === 0 && "Samo tekst"}
+						{content.drinks_images === 1 && "Sa slikama"}
+					</p>
 
-							<Link href="#">
-								<IconPencil
-									stroke={1}
-									size={46}
-									className="p-2"
-								/>
-							</Link>
-						</div>
-					</div>
-
-					<div className="flex gap-2 justify-center">
-						<p className="mb-2">Način prikazivanja:</p>
-
-						<RadioGroup defaultValue="option-one">
-							<div className="flex items-center space-x-2">
-								<RadioGroupItem
-									value="option-one"
-									id="option-one"
-								/>
-								<Label
-									htmlFor="option-one"
-									className="font-normal text-base"
-								>
-									Samo tekst
-								</Label>
-							</div>
-							<div className="flex items-center space-x-2">
-								<RadioGroupItem
-									value="option-two"
-									id="option-two"
-								/>
-								<Label
-									htmlFor="option-two"
-									className="font-normal text-base"
-								>
-									Sa slikama
-								</Label>
-							</div>
-						</RadioGroup>
-					</div>
+					<Button
+						asChild
+						className="bg-gray-900"
+					>
+						<Link href="#">Pregled & izmjene</Link>
+					</Button>
 				</article>
 
 				<article className="px-4 pt-4 pb-6 m-4 rounded-md col-span-1 border-[1px] border-gray-900 shadow-md">
@@ -211,7 +143,7 @@ export default function Dashboard({ params }) {
 				</article>
 
 				<article className="flex flex-col gap-4 px-4 pt-4 pb-6 m-4 rounded-md col-span-2 border-[1px] border-gray-900 shadow-md">
-					<p className="font-semibold mb-2 text-center">Vise informacija</p>
+					<p className="font-semibold text-center">Vise informacija</p>
 
 					<div>
 						<div className="flex justify-between items-center">
@@ -367,8 +299,8 @@ export default function Dashboard({ params }) {
 					</div>
 				</article>
 
-				<article className="flex flex-col gap-2 px-4 pt-4 pb-6 m-4 rounded-md col-span-2 border-[1px] border-gray-900 shadow-md">
-					<p className="font-semibold mb-6 text-center">Linkovi</p>
+				<article className="flex flex-col gap-4 px-4 pt-4 pb-6 m-4 rounded-md col-span-2 border-[1px] border-gray-900 shadow-md">
+					<p className="font-semibold text-center">Linkovi</p>
 
 					<div className="truncate">
 						<div className="flex justify-between items-center">
