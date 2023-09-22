@@ -94,3 +94,16 @@ export const Work_hours_remove_schema = z.object({
 export function Work_hours_remove_validation({ incoming_data }) {
 	return Work_hours_remove_schema.parse(incoming_data);
 }
+
+//* ============================================= //
+//* ========== NEW CATEGORY VALIDATION ========== //
+//* ============================================= //
+
+export const New_cat_schema = z.object({
+	local_id: z.string(),
+	new_value: z.string().max(50, { message: "Max 50 karaktera" }),
+});
+
+export function New_cat_validation({ incoming_data }) {
+	return New_cat_schema.parse(incoming_data);
+}

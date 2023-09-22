@@ -19,17 +19,17 @@ import Work_hours_form from "./Work_hours_form";
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
 export default function Dashboard({ params }) {
-	const { data, error, isLoading } = useSWR(`http://0.0.0.0:3000/api/admin/dashboard/${params.local_id}`, fetcher);
+	const { data, error, isLoading } = useSWR(`http://0.0.0.0:3000/api/admin/${params.local_id}`, fetcher);
 
 	if (isLoading) return <p>Loading...</p>;
 
 	const { content } = data;
 
-	console.log(content);
+	// console.log(content);
 
 	return (
 		<main className="flex-grow py-8">
-			<p className="text-center text-xl font-semibold mb-6">{content.name}l</p>
+			<p className="text-center text-xl font-semibold mb-6">{content.name}</p>
 
 			<section className="grid grid-cols-2 md:grid-cols-4">
 				<article className="px-4 pt-4 pb-6 m-4 rounded-md col-span-2 border-[1px] border-gray-900 shadow-md">

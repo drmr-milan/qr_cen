@@ -45,7 +45,7 @@ export default function SM_url_form({ local_id, name, value }) {
 			description: <p>Uspjesno izmjenjeno</p>,
 		});
 
-		mutate(`http://0.0.0.0:3000/api/admin/dashboard/${local_id}`);
+		mutate(`http://0.0.0.0:3000/api/admin/${local_id}`);
 	}
 
 	async function onSubmit_remove(data) {
@@ -70,7 +70,7 @@ export default function SM_url_form({ local_id, name, value }) {
 			description: <p>Uspjesno</p>,
 		});
 
-		mutate(`http://0.0.0.0:3000/api/admin/dashboard/${local_id}`);
+		mutate(`http://0.0.0.0:3000/api/admin/${local_id}`);
 	}
 
 	return (
