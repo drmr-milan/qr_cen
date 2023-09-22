@@ -109,6 +109,10 @@ export default function Dashboard({ params }) {
 				<article className="flex flex-col gap-4 px-4 pt-4 pb-6 m-4 rounded-md col-span-2 border-[1px] border-gray-900 shadow-md">
 					<p className="font-semibold text-center">Meni</p>
 
+					{/* //TODO: create tables in DB for food_cat & food_items */}
+					{/* //TODO: replace content.drinks with respected content.food */}
+					{/* //TODO: create /edit_food & change Link href down  */}
+
 					<p className="text-center">
 						Katergorija: {content.drinks_cat}
 						{content.package === "Besplatno" && " od 5"}
