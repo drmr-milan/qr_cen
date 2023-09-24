@@ -30,15 +30,6 @@ export default function Edit_drinks({ params }) {
 			<p className="ml-2">Link za pregled kako gosti vide</p>
 			<br />
 
-			<Category_limiter
-				local_id={params.local_id}
-				local_package={local_info.package}
-				cat_type="drinks_cat"
-				items_type="drinks"
-				num_of_items={content.length}
-				key={Math.random()}
-			/>
-
 			{content.map((cat) => {
 				return (
 					<section key={`${cat.name.replaceAll(" ", "_")}_section`}>
@@ -89,6 +80,15 @@ export default function Edit_drinks({ params }) {
 					</section>
 				);
 			})}
+
+			<Category_limiter
+				local_id={params.local_id}
+				local_package={local_info.package}
+				cat_type="drinks_cat"
+				items_type="drinks"
+				num_of_items={content.length}
+				key={Math.random()}
+			/>
 
 			<p className="ml-16">Artikl u kategoriji</p>
 			<p className="ml-16 opacity-75">Izmjeni button: (Naziv, zapremina, opis), Ukloni iz kategorije, Obrisi artikl</p>
