@@ -17,7 +17,7 @@ import { IconEdit } from "@tabler/icons-react";
 
 const fecher = (...args) => fetch(...args).then((res) => res.json());
 
-export default function Category_rename_delete({ local_id, cat_id, name, cat_type, order_num }) {
+export default function Category_rename_delete({ local_id, cat_type, items_type, cat_id, name, order_num }) {
 	const form = useForm({ resolver: zodResolver(Edit_cat_schema) });
 	const form_remove = useForm({ resolver: zodResolver(Delete_cat_schema) });
 	const { toast } = useToast();
@@ -31,7 +31,7 @@ export default function Category_rename_delete({ local_id, cat_id, name, cat_typ
 			description: <p>U toku</p>,
 		});
 
-		const send_data = await fecher(`/api/admin/${local_id}/${cat_type}`, {
+		const send_data = await fecher(`/api/admin/${local_id}/categorys/${cat_type}/${items_type}`, {
 			method: "PUT",
 			body: JSON.stringify({ cat_id: data.cat_id, new_value: data.new_value }),
 		}).catch((error) => {
@@ -45,7 +45,7 @@ export default function Category_rename_delete({ local_id, cat_id, name, cat_typ
 			description: <p>Uspjesno izmjenjeno</p>,
 		});
 
-		mutate(`http://0.0.0.0:3000/api/admin/${local_id}/${cat_type}`);
+		mutate(`/api/admin/${local_id}/categorys/${cat_type}/${items_type}`);
 	}
 
 	async function onSubmit_remove(data) {
@@ -56,7 +56,7 @@ export default function Category_rename_delete({ local_id, cat_id, name, cat_typ
 			description: <p>U toku</p>,
 		});
 
-		const send_data = await fecher(`/api/admin/${local_id}/${cat_type}`, {
+		const send_data = await fecher(`/api/admin/${local_id}/categorys/${cat_type}/${items_type}`, {
 			method: "DELETE",
 			body: JSON.stringify({ cat_id: data.cat_id, order_num: data.order_num }),
 		}).catch((error) => {
@@ -70,7 +70,7 @@ export default function Category_rename_delete({ local_id, cat_id, name, cat_typ
 			description: <p>Uspjesno</p>,
 		});
 
-		mutate(`http://0.0.0.0:3000/api/admin/${local_id}/${cat_type}`);
+		mutate(`/api/admin/${local_id}/categorys/${cat_type}/${items_type}`);
 	}
 
 	return (

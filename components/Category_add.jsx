@@ -15,7 +15,7 @@ import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogT
 
 const fecher = (...args) => fetch(...args).then((res) => res.json());
 
-export default function Category_add({ local_id, cat_type }) {
+export default function Category_add({ local_id, cat_type, items_type }) {
 	const form = useForm({ resolver: zodResolver(New_cat_schema) });
 	const { toast } = useToast();
 	const [open, setOpen] = useState(false);
@@ -28,7 +28,7 @@ export default function Category_add({ local_id, cat_type }) {
 			description: <p>U toku</p>,
 		});
 
-		const send_data = await fecher(`/api/admin/${local_id}/${cat_type}`, {
+		const send_data = await fecher(`/api/admin/${local_id}/categorys/${cat_type}/${items_type}`, {
 			method: "POST",
 			body: JSON.stringify({ local_id: data.local_id, new_value: data.new_value }),
 		}).catch((error) => {
@@ -42,7 +42,7 @@ export default function Category_add({ local_id, cat_type }) {
 			description: <p>Uspjesno dodano</p>,
 		});
 
-		mutate(`http://0.0.0.0:3000/api/admin/${local_id}/${cat_type}`);
+		mutate(`/api/admin/${local_id}/categorys/${cat_type}/${items_type}`);
 	}
 
 	return (
@@ -62,18 +62,6 @@ export default function Category_add({ local_id, cat_type }) {
 						onSubmit={form.handleSubmit(onSubmit)}
 						id={`new_${cat_type}_form`}
 					>
-						<FormField
-							name="local_id"
-							defaultValue={local_id}
-							render={({ field }) => (
-								<FormItem>
-									<Input
-										{...field}
-										className="hidden"
-									/>
-								</FormItem>
-							)}
-						/>
 						<FormField
 							control={form.control}
 							name="new_value"

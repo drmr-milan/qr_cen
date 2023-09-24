@@ -10,7 +10,7 @@ import Category_order from "@/components/Category_order";
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
 export default function Edit_drinks({ params }) {
-	const { data, error, isLoading } = useSWR(`http://0.0.0.0:3000/api/admin/${params.local_id}/drinks`, fetcher);
+	const { data, error, isLoading } = useSWR(`/api/admin/${params.local_id}/categorys/drinks_cat/drinks`, fetcher);
 
 	if (isLoading) return <p>Loading...</p>;
 
@@ -36,7 +36,8 @@ export default function Edit_drinks({ params }) {
 				<div className="mx-4 my-8 text-center">
 					<Category_add
 						local_id={params.local_id}
-						cat_type="drinks"
+						cat_type="drinks_cat"
+						items_type="drinks"
 						key={Math.random()}
 					/>
 				</div>
@@ -46,7 +47,8 @@ export default function Edit_drinks({ params }) {
 				<div className="mx-4 my-8 text-center">
 					<Category_add
 						local_id={params.local_id}
-						cat_type="drinks"
+						cat_type="drinks_cat"
+						items_type="drinks"
 						key={Math.random()}
 					/>
 				</div>
@@ -56,7 +58,8 @@ export default function Edit_drinks({ params }) {
 				<div className="mx-4 my-8 text-center">
 					<Category_add
 						local_id={params.local_id}
-						cat_type="drinks"
+						cat_type="drinks_cat"
+						items_type="drinks"
 						key={Math.random()}
 					/>
 				</div>
@@ -69,7 +72,8 @@ export default function Edit_drinks({ params }) {
 							{cat.order_num > 1 && (
 								<Category_order
 									local_id={params.local_id}
-									cat_type="drinks"
+									cat_type="drinks_cat"
+									items_type="drinks"
 									cat_name={cat.name.replaceAll(" ", "_")}
 									order_num={cat.order_num}
 									key={Math.random()}
@@ -80,13 +84,18 @@ export default function Edit_drinks({ params }) {
 
 							<Category_rename_delete
 								local_id={params.local_id}
+								cat_type="drinks_cat"
+								items_type="drinks"
 								cat_id={cat.id}
 								name={cat.name}
 								order_num={cat.order_num}
-								cat_type="drinks"
 								key={Math.random()}
 							/>
-							<Article_add />
+
+							<Article_add
+								local_id={params.local_id}
+								cat_id={cat.id}
+							/>
 						</div>
 
 						{cat.articles.map((article) => {

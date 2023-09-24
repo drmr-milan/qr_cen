@@ -100,7 +100,6 @@ export function Work_hours_remove_validation({ incoming_data }) {
 //* ============================================= //
 
 export const New_cat_schema = z.object({
-	local_id: z.string(),
 	new_value: z.string().max(50, { message: "Max 50 karaktera" }),
 });
 

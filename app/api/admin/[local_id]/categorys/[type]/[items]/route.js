@@ -10,11 +10,8 @@ export async function GET(req, { params }) {
 
 	try {
 		[local_info] = await db_connection.query("SELECT name, package FROM locals WHERE id = ?;", [params.local_id]);
-		[content] = await db_connection.query("SELECT id, name, order_num FROM ?? WHERE local_id = ? ORDER BY order_num;", [
-			`${params.cat_type}_cat`,
-			params.local_id,
-		]);
-		[articles] = await db_connection.query("SELECT * FROM ?? WHERE local_id = ?;", [params.cat_type, params.local_id]);
+		[content] = await db_connection.query("SELECT id, name, order_num FROM ?? WHERE local_id = ? ORDER BY order_num;", [params.type, params.local_id]);
+		[articles] = await db_connection.query("SELECT * FROM ?? WHERE local_id = ?;", [params.items, params.local_id]);
 
 		content.forEach((cat) => {
 			cat.articles = [];
@@ -47,7 +44,7 @@ export async function POST(req, { params }) {
 	try {
 		await db_connection.query(
 			"INSERT INTO ?? VALUES (UUID(), ?, ?, (SELECT MAX(count_table.order_num) + 1 AS new_max FROM ?? AS count_table WHERE local_id = ?));",
-			[`${params.cat_type}_cat`, incoming_data.local_id, incoming_data.new_value, `${params.cat_type}_cat`, incoming_data.local_id]
+			[params.type, params.local_id, incoming_data.new_value, params.type, params.local_id]
 		);
 		db_connection.release();
 	} catch (error) {
@@ -71,7 +68,7 @@ export async function PUT(req, { params }) {
 
 	const db_connection = await promisePool.getConnection();
 	try {
-		await db_connection.query("UPDATE ?? SET name = ? WHERE id = ?;", [`${params.cat_type}_cat`, incoming_data.new_value, incoming_data.cat_id]);
+		await db_connection.query("UPDATE ?? SET name = ? WHERE id = ?;", [params.type, incoming_data.new_value, incoming_data.cat_id]);
 		db_connection.release();
 	} catch (error) {
 		db_connection.release();
@@ -79,7 +76,7 @@ export async function PUT(req, { params }) {
 		return NextResponse.json({ message: "Error" }, { status: 500 });
 	}
 
-	return NextResponse.json({ message: `${incoming_data.col_name} data added` }, { status: 200 });
+	return NextResponse.json({ message: `${incoming_data.col_name} item name updated` }, { status: 200 });
 }
 
 export async function PATCH(req, { params }) {
@@ -97,7 +94,7 @@ export async function PATCH(req, { params }) {
 		await db_connection.query(
 			"UPDATE ?? SET order_num = CASE WHEN order_num = ? then ? WHEN order_num = ? then ? END WHERE local_id = ? AND (order_num = ? OR order_num = ?);",
 			[
-				`${params.cat_type}_cat`,
+				params.type,
 				incoming_data.order_num,
 				incoming_data.order_num - 1,
 				incoming_data.order_num - 1,
@@ -114,7 +111,7 @@ export async function PATCH(req, { params }) {
 		return NextResponse.json({ message: "Error" }, { status: 500 });
 	}
 
-	return NextResponse.json({ message: `${params.cat_type} item order updated` }, { status: 200 });
+	return NextResponse.json({ message: `${params.type} item order updated` }, { status: 200 });
 }
 
 export async function DELETE(req, { params }) {
@@ -129,9 +126,9 @@ export async function DELETE(req, { params }) {
 
 	const db_connection = await promisePool.getConnection();
 	try {
-		await db_connection.query("DELETE FROM ?? WHERE id = ?;", [`${params.cat_type}_cat`, incoming_data.cat_id]);
+		await db_connection.query("DELETE FROM ?? WHERE id = ?;", [params.type, incoming_data.cat_id]);
 		await db_connection.query("UPDATE ?? SET order_num = order_num - 1 WHERE local_id = ? AND order_num > ?;", [
-			`${params.cat_type}_cat`,
+			params.type,
 			params.local_id,
 			incoming_data.order_num,
 		]);
@@ -142,5 +139,5 @@ export async function DELETE(req, { params }) {
 		return NextResponse.json({ message: "Error" }, { status: 500 });
 	}
 
-	return NextResponse.json({ message: `${params.cat_type} category and articles deleted` }, { status: 200 });
+	return NextResponse.json({ message: `${params.type} category and articles deleted` }, { status: 200 });
 }
