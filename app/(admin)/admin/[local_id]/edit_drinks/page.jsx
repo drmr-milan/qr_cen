@@ -2,10 +2,10 @@
 
 import useSWR from "swr";
 
-import Category_add from "@/components/Category_add";
 import Category_rename_delete from "@/components/Category_rename_remove";
 import Article_add from "@/components/Article_add";
 import Category_order from "@/components/Category_order";
+import Category_limiter from "@/components/Category_limiter";
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
@@ -17,6 +17,7 @@ export default function Edit_drinks({ params }) {
 	const { content, local_info } = data;
 
 	console.log(content);
+	console.log(local_info);
 
 	return (
 		<main className="flex-grow py-8">
@@ -29,41 +30,14 @@ export default function Edit_drinks({ params }) {
 			<p className="ml-2">Link za pregled kako gosti vide</p>
 			<br />
 
-			<p className="ml-2">Broj kategorija, broj artikala sa kategorijom i broj artikala bez kategorije ako nije maxi paket prikazati i ogranicenja</p>
-			<br />
-
-			{local_info.package === "Besplatan" && content.length < 5 && (
-				<div className="mx-4 my-8 text-center">
-					<Category_add
-						local_id={params.local_id}
-						cat_type="drinks_cat"
-						items_type="drinks"
-						key={Math.random()}
-					/>
-				</div>
-			)}
-
-			{local_info.package === "Plus" && content.length < 10 && (
-				<div className="mx-4 my-8 text-center">
-					<Category_add
-						local_id={params.local_id}
-						cat_type="drinks_cat"
-						items_type="drinks"
-						key={Math.random()}
-					/>
-				</div>
-			)}
-
-			{local_info.package === "Maxi" && (
-				<div className="mx-4 my-8 text-center">
-					<Category_add
-						local_id={params.local_id}
-						cat_type="drinks_cat"
-						items_type="drinks"
-						key={Math.random()}
-					/>
-				</div>
-			)}
+			<Category_limiter
+				local_id={params.local_id}
+				local_package={local_info.package}
+				cat_type="drinks_cat"
+				items_type="drinks"
+				num_of_items={content.length}
+				key={Math.random()}
+			/>
 
 			{content.map((cat) => {
 				return (
