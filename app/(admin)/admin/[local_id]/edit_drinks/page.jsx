@@ -5,6 +5,7 @@ import useSWR from "swr";
 import Category_add from "@/components/Category_add";
 import Category_rename_delete from "@/components/Category_rename_remove";
 import Article_add from "@/components/Article_add";
+import Category_order from "@/components/Category_order";
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
@@ -36,6 +37,7 @@ export default function Edit_drinks({ params }) {
 					<Category_add
 						local_id={params.local_id}
 						cat_type="drinks"
+						key={Math.random()}
 					/>
 				</div>
 			)}
@@ -45,6 +47,7 @@ export default function Edit_drinks({ params }) {
 					<Category_add
 						local_id={params.local_id}
 						cat_type="drinks"
+						key={Math.random()}
 					/>
 				</div>
 			)}
@@ -54,6 +57,7 @@ export default function Edit_drinks({ params }) {
 					<Category_add
 						local_id={params.local_id}
 						cat_type="drinks"
+						key={Math.random()}
 					/>
 				</div>
 			)}
@@ -61,14 +65,26 @@ export default function Edit_drinks({ params }) {
 			{content.map((cat) => {
 				return (
 					<section key={`${cat.name.replaceAll(" ", "_")}_section`}>
-						<div className="flex gap-2 items-center pl-4 pr-2 py-2 bg-gray-900 text-gray-50">
+						<div className={`flex gap-2 items-center pr-2 py-2 bg-gray-900 text-gray-50 ${cat.order_num === 1 ? "pl-6" : "pl-2"}`}>
+							{cat.order_num > 1 && (
+								<Category_order
+									local_id={params.local_id}
+									cat_type="drinks"
+									cat_name={cat.name.replaceAll(" ", "_")}
+									order_num={cat.order_num}
+									key={Math.random()}
+								/>
+							)}
+
 							<p className="flex-grow">{cat.name}</p>
 
 							<Category_rename_delete
 								local_id={params.local_id}
 								cat_id={cat.id}
 								name={cat.name}
+								order_num={cat.order_num}
 								cat_type="drinks"
+								key={Math.random()}
 							/>
 							<Article_add />
 						</div>
@@ -91,18 +107,12 @@ export default function Edit_drinks({ params }) {
 				);
 			})}
 
-			<p className="ml-8">Naziv kategorije</p>
-			<p className="ml-8 opacity-75">Izmjeni button: Naziv, obrisi</p>
 			<p className="ml-16">Artikl u kategoriji</p>
 			<p className="ml-16 opacity-75">Izmjeni button: (Naziv, zapremina, opis), Ukloni iz kategorije, Obrisi artikl</p>
 			<p className="ml-16 opacity-75">Slika button: Dodaj sliku, Ukloni sliku - samo za maxi paket</p>
 
 			<br />
-			<p className="ml-2">Artikli bez kategorije</p>
-			<p className="ml-2 opacity-75">Izmjeni button: Dodaj kategoriju, obrisi artikl</p>
-			<p className="ml-2 opacity-75">Slika button: Dodaj sliku, Ukloni sliku - samo za maxi paket</p>
-			<br />
-			<p className="ml-2">Dodaj kategoriju</p>
+
 			<p className="ml-2">Dodaj artikl</p>
 		</main>
 	);

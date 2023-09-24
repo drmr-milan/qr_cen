@@ -107,3 +107,41 @@ export const New_cat_schema = z.object({
 export function New_cat_validation({ incoming_data }) {
 	return New_cat_schema.parse(incoming_data);
 }
+
+//* ============================================ //
+//* ========= EDIT CATEGORY VALIDATION ========= //
+//* ============================================ //
+
+export const Edit_cat_schema = z.object({
+	cat_id: z.string(),
+	new_value: z.string().max(50, { message: "Max 50 karaktera" }),
+});
+
+export function Edit_cat_validation({ incoming_data }) {
+	return Edit_cat_schema.parse(incoming_data);
+}
+
+//* ============================================= //
+//* ========= ORDER CATEGORY VALIDATION ========= //
+//* ============================================= //
+
+export const Order_cat_schema = z.object({
+	order_num: z.number(),
+});
+
+export function Order_cat_validation({ incoming_data }) {
+	return Order_cat_schema.parse(incoming_data);
+}
+
+//* ============================================ //
+//* ======== DELETE CATEGORY VALIDATION ======== //
+//* ============================================ //
+
+export const Delete_cat_schema = z.object({
+	cat_id: z.string(),
+	order_num: z.number(),
+});
+
+export function Delete_cat_validation({ incoming_data }) {
+	return Delete_cat_schema.parse(incoming_data);
+}

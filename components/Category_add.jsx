@@ -51,7 +51,7 @@ export default function Category_add({ local_id, cat_type }) {
 			onOpenChange={setOpen}
 		>
 			<DialogTrigger asChild>
-				<Button className="bg-gray-900">Dodaj novu kategoriju</Button>
+				<Button className="bg-gray-900 text-gray-50">Dodaj novu kategoriju</Button>
 			</DialogTrigger>
 			<DialogContent className="sm:max-w-[425px]">
 				<DialogHeader>

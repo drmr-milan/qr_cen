@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { mutate } from "swr";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { About_schema, Set_value_null_schema } from "@/utils/ValidationShemas";
+import { Delete_cat_schema, Edit_cat_schema } from "@/utils/ValidationShemas";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -17,16 +17,13 @@ import { IconEdit } from "@tabler/icons-react";
 
 const fecher = (...args) => fetch(...args).then((res) => res.json());
 
-export default function Category_rename_delete({ local_id, cat_id, name, cat_type }) {
-	const form = useForm({ resolver: zodResolver(About_schema) });
-	const form_remove = useForm({ resolver: zodResolver(Set_value_null_schema) });
+export default function Category_rename_delete({ local_id, cat_id, name, cat_type, order_num }) {
+	const form = useForm({ resolver: zodResolver(Edit_cat_schema) });
+	const form_remove = useForm({ resolver: zodResolver(Delete_cat_schema) });
 	const { toast } = useToast();
 	const [open, setOpen] = useState(false);
 
 	async function onSubmit(data) {
-		console.log(data);
-		return;
-
 		setOpen(false);
 
 		toast({
@@ -34,9 +31,9 @@ export default function Category_rename_delete({ local_id, cat_id, name, cat_typ
 			description: <p>U toku</p>,
 		});
 
-		const send_data = await fecher(`/api/admin/cat_update`, {
+		const send_data = await fecher(`/api/admin/${local_id}/${cat_type}`, {
 			method: "PUT",
-			body: JSON.stringify({ local_id: data.local_id, col_name: data.col_name, new_value: data.new_value }),
+			body: JSON.stringify({ cat_id: data.cat_id, new_value: data.new_value }),
 		}).catch((error) => {
 			console.log(error);
 			alert("Došlo je do greške.");
@@ -52,9 +49,6 @@ export default function Category_rename_delete({ local_id, cat_id, name, cat_typ
 	}
 
 	async function onSubmit_remove(data) {
-		console.log(data);
-		return;
-
 		setOpen(false);
 
 		toast({
@@ -62,9 +56,9 @@ export default function Category_rename_delete({ local_id, cat_id, name, cat_typ
 			description: <p>U toku</p>,
 		});
 
-		const send_data = await fecher("/api/admin/set_value_null", {
-			method: "PATCH",
-			body: JSON.stringify({ local_id: data.local_id, col_name: data.col_name }),
+		const send_data = await fecher(`/api/admin/${local_id}/${cat_type}`, {
+			method: "DELETE",
+			body: JSON.stringify({ cat_id: data.cat_id, order_num: data.order_num }),
 		}).catch((error) => {
 			console.log(error);
 			alert("Došlo je do greške.");
@@ -85,15 +79,20 @@ export default function Category_rename_delete({ local_id, cat_id, name, cat_typ
 			onOpenChange={setOpen}
 		>
 			<DialogTrigger asChild>
-				<IconEdit
-					stroke={1}
-					size={44}
-					className="p-2"
-				/>
+				<Button
+					variant="ghost"
+					size="icon"
+					className="bg-gray-900 text-gray-50"
+				>
+					<IconEdit
+						stroke={1}
+						size={44}
+					/>
+				</Button>
 			</DialogTrigger>
 			<DialogContent className="sm:max-w-[425px]">
 				<DialogHeader>
-					<DialogTitle className="mb-2">Izmjena - naziva kategorije</DialogTitle>
+					<DialogTitle className="mb-2">Izmjena - kategorije</DialogTitle>
 				</DialogHeader>
 				<Form {...form}>
 					<form
@@ -121,6 +120,7 @@ export default function Category_rename_delete({ local_id, cat_id, name, cat_typ
 									<FormControl>
 										<Input
 											{...field}
+											autoComplete="off"
 											type="text"
 										/>
 									</FormControl>
@@ -134,12 +134,12 @@ export default function Category_rename_delete({ local_id, cat_id, name, cat_typ
 				<Form {...form_remove}>
 					<form
 						onSubmit={form_remove.handleSubmit(onSubmit_remove)}
-						id={`remove_${cat_type}_form`}
+						id={`remove_${name.replaceAll(" ", "_")}_form`}
 						className="hidden"
 					>
 						<FormField
-							name="local_id"
-							defaultValue={local_id}
+							name="cat_id"
+							defaultValue={cat_id}
 							render={({ field }) => (
 								<FormItem>
 									<Input {...field} />
@@ -147,8 +147,8 @@ export default function Category_rename_delete({ local_id, cat_id, name, cat_typ
 							)}
 						/>
 						<FormField
-							name="col_name"
-							defaultValue="about"
+							name="order_num"
+							defaultValue={order_num}
 							render={({ field }) => (
 								<FormItem>
 									<Input {...field} />
@@ -161,6 +161,7 @@ export default function Category_rename_delete({ local_id, cat_id, name, cat_typ
 					<Button
 						type="submit"
 						form={`rename_${cat_type}_form`}
+						className="bg-gray-900 text-gray-50"
 					>
 						Sačuvaj
 					</Button>
@@ -168,7 +169,7 @@ export default function Category_rename_delete({ local_id, cat_id, name, cat_typ
 					<Button
 						type="submit"
 						variant="destructive"
-						form={`remove_${cat_type}_form`}
+						form={`remove_${name.replaceAll(" ", "_")}_form`}
 					>
 						Obriši kategoriju i sve artikle u njoj
 					</Button>
