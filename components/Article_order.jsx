@@ -16,7 +16,8 @@ import { IconArrowBadgeUp } from "@tabler/icons-react";
 const fecher = (...args) => fetch(...args).then((res) => res.json());
 
 export default function Article_order({ local_id, cat_type, items_type, cat_id, article_id, order_num }) {
-	const form = useForm({ resolver: zodResolver(Order_article_schema) });
+	// const form = useForm({ resolver: zodResolver(Order_article_schema) });
+	const form = useForm();
 	const { toast } = useToast();
 
 	async function onSubmit(data) {
@@ -29,7 +30,7 @@ export default function Article_order({ local_id, cat_type, items_type, cat_id, 
 
 		const send_data = await fecher(`/api/admin/${local_id}/articles/${cat_type}/${items_type}`, {
 			method: "PATCH",
-			body: JSON.stringify({ cat_id: data.cat_id, order_num: data.order_num }),
+			body: JSON.stringify({ cat_id, order_num }),
 		}).catch((error) => {
 			console.log(error);
 			alert("Došlo je do greške.");
@@ -51,32 +52,7 @@ export default function Article_order({ local_id, cat_type, items_type, cat_id, 
 					onSubmit={form.handleSubmit(onSubmit)}
 					id={`order_${article_id}_form`}
 					className="hidden"
-				>
-					<FormField
-						control={form.control}
-						name="cat_id"
-						defaultValue={cat_id}
-						render={({ field }) => (
-							<FormItem>
-								<FormControl>
-									<Input {...field} />
-								</FormControl>
-							</FormItem>
-						)}
-					/>
-					<FormField
-						control={form.control}
-						name="order_num"
-						defaultValue={order_num}
-						render={({ field }) => (
-							<FormItem>
-								<FormControl>
-									<Input {...field} />
-								</FormControl>
-							</FormItem>
-						)}
-					/>
-				</form>
+				></form>
 			</Form>
 			<Button
 				type="submit"
