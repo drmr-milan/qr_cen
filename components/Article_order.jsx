@@ -3,11 +3,7 @@
 import { useForm } from "react-hook-form";
 import { mutate } from "swr";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Order_article_schema } from "@/utils/ValidationShemas";
-
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 
@@ -16,7 +12,6 @@ import { IconArrowBadgeUp } from "@tabler/icons-react";
 const fecher = (...args) => fetch(...args).then((res) => res.json());
 
 export default function Article_order({ local_id, cat_type, items_type, cat_id, article_id, order_num }) {
-	// const form = useForm({ resolver: zodResolver(Order_article_schema) });
 	const form = useForm();
 	const { toast } = useToast();
 
