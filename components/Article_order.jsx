@@ -15,9 +15,7 @@ export default function Article_order({ local_id, cat_type, items_type, cat_id, 
 	const form = useForm();
 	const { toast } = useToast();
 
-	async function onSubmit(data) {
-		console.log(data);
-
+	async function onSubmit() {
 		toast({
 			title: `Izmjena - pozicije artikla`,
 			description: <p>U toku</p>,

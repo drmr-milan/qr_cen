@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { mutate } from "swr";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Delete_cat_schema, Edit_cat_schema } from "@/utils/ValidationShemas";
+import { Edit_cat_schema } from "@/utils/ValidationShemas";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -19,7 +19,7 @@ const fecher = (...args) => fetch(...args).then((res) => res.json());
 
 export default function Category_rename_delete({ local_id, cat_type, items_type, cat_id, name, order_num }) {
 	const form = useForm({ resolver: zodResolver(Edit_cat_schema) });
-	const form_remove = useForm({ resolver: zodResolver(Delete_cat_schema) });
+	const form_remove = useForm();
 	const { toast } = useToast();
 	const [open, setOpen] = useState(false);
 
@@ -48,7 +48,7 @@ export default function Category_rename_delete({ local_id, cat_type, items_type,
 		mutate(`/api/admin/${local_id}/categorys/${cat_type}/${items_type}`);
 	}
 
-	async function onSubmit_remove(data) {
+	async function onSubmit_remove() {
 		setOpen(false);
 
 		toast({
@@ -58,7 +58,7 @@ export default function Category_rename_delete({ local_id, cat_type, items_type,
 
 		const send_data = await fecher(`/api/admin/${local_id}/categorys/${cat_type}/${items_type}`, {
 			method: "DELETE",
-			body: JSON.stringify({ cat_id: data.cat_id, order_num: data.order_num }),
+			body: JSON.stringify({ cat_id, order_num }),
 		}).catch((error) => {
 			console.log(error);
 			alert("Došlo je do greške.");
@@ -134,28 +134,9 @@ export default function Category_rename_delete({ local_id, cat_type, items_type,
 				<Form {...form_remove}>
 					<form
 						onSubmit={form_remove.handleSubmit(onSubmit_remove)}
-						id={`remove_${name.replaceAll(" ", "_")}_form`}
+						id={`remove_${cat_id}_form`}
 						className="hidden"
-					>
-						<FormField
-							name="cat_id"
-							defaultValue={cat_id}
-							render={({ field }) => (
-								<FormItem>
-									<Input {...field} />
-								</FormItem>
-							)}
-						/>
-						<FormField
-							name="order_num"
-							defaultValue={order_num}
-							render={({ field }) => (
-								<FormItem>
-									<Input {...field} />
-								</FormItem>
-							)}
-						/>
-					</form>
+					></form>
 				</Form>
 				<DialogFooter className="grid gap-2">
 					<Button
@@ -169,7 +150,7 @@ export default function Category_rename_delete({ local_id, cat_type, items_type,
 					<Button
 						type="submit"
 						variant="destructive"
-						form={`remove_${name.replaceAll(" ", "_")}_form`}
+						form={`remove_${cat_id}_form`}
 					>
 						Obriši kategoriju i sve artikle u njoj
 					</Button>

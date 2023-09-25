@@ -15,7 +15,7 @@ export default function Category_order({ local_id, cat_type, items_type, cat_id,
 	const form = useForm();
 	const { toast } = useToast();
 
-	async function onSubmit(data) {
+	async function onSubmit() {
 		toast({
 			title: `Izmjena - pozicije kategorije`,
 			description: <p>U toku</p>,
