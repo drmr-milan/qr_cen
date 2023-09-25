@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import promisePool from "@/lib/database";
-import { New_article_validation, Order_article_validation } from "@/utils/ValidationShemas";
+import { Delete_article_validation, New_article_validation, Order_article_validation } from "@/utils/ValidationShemas";
 
 export async function POST(req, { params }) {
 	let incoming_data = null;
@@ -73,4 +73,33 @@ export async function PATCH(req, { params }) {
 	}
 
 	return NextResponse.json({ message: `${params.type} item order updated` }, { status: 200 });
+}
+
+export async function DELETE(req, { params }) {
+	let incoming_data = null;
+	try {
+		incoming_data = await req.json();
+		Delete_article_validation({ incoming_data });
+	} catch (error) {
+		console.error(error);
+		return NextResponse.json({ message: "Invalid input data" }, { status: 422 });
+	}
+
+	const db_connection = await promisePool.getConnection();
+	try {
+		await db_connection.query("DELETE FROM ?? WHERE id = ?;", [params.items, incoming_data.article_id]);
+		await db_connection.query("UPDATE ?? SET order_num = order_num - 1 WHERE local_id = ? AND drinks_cat_id = ? AND order_num > ?;", [
+			params.items,
+			params.local_id,
+			incoming_data.cat_id,
+			incoming_data.order_num,
+		]);
+		db_connection.release();
+	} catch (error) {
+		db_connection.release();
+		console.log(error);
+		return NextResponse.json({ message: "Error" }, { status: 500 });
+	}
+
+	return NextResponse.json({ message: `${params.type} category and articles deleted` }, { status: 200 });
 }

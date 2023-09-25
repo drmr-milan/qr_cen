@@ -163,7 +163,7 @@ export function New_article_validation({ incoming_data }) {
 }
 
 //* ============================================= //
-//* ========= ORDER CATEGORY VALIDATION ========= //
+//* ========= ORDER ARTICLES VALIDATION ========= //
 //* ============================================= //
 
 export const Order_article_schema = z.object({
@@ -173,4 +173,18 @@ export const Order_article_schema = z.object({
 
 export function Order_article_validation({ incoming_data }) {
 	return Order_article_schema.parse(incoming_data);
+}
+
+//* ============================================ //
+//* ======== DELETE ARTICLES VALIDATION ======== //
+//* ============================================ //
+
+export const Delete_article_schema = z.object({
+	article_id: z.string(),
+	cat_id: z.string(),
+	order_num: z.number(),
+});
+
+export function Delete_article_validation({ incoming_data }) {
+	return Delete_cat_schema.parse(incoming_data);
 }

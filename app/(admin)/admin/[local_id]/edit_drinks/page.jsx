@@ -104,7 +104,8 @@ export default function Edit_drinks({ params }) {
 									<Article_edit
 										local_id={params.local_id}
 										cat_type="drinks_cat"
-										item_type="drinks"
+										items_type="drinks"
+										cat_id={cat.id}
 										article_id={article.id}
 										article_name={article.name}
 										order_num={article.order_num}
