@@ -11,7 +11,7 @@ export async function GET(req, { params }) {
 	try {
 		[local_info] = await db_connection.query("SELECT name, package FROM locals WHERE id = ?;", [params.local_id]);
 		[content] = await db_connection.query("SELECT id, name, order_num FROM ?? WHERE local_id = ? ORDER BY order_num;", [params.type, params.local_id]);
-		[articles] = await db_connection.query("SELECT * FROM ?? WHERE local_id = ?;", [params.items, params.local_id]);
+		[articles] = await db_connection.query("SELECT * FROM ?? WHERE local_id = ? ORDER BY order_num;", [params.items, params.local_id]);
 
 		content.forEach((cat) => {
 			cat.articles = [];
@@ -43,7 +43,7 @@ export async function POST(req, { params }) {
 	const db_connection = await promisePool.getConnection();
 	try {
 		await db_connection.query(
-			"INSERT INTO ?? VALUES (UUID(), ?, ?, (SELECT MAX(count_table.order_num) + 1 AS new_max FROM ?? AS count_table WHERE local_id = ?));",
+			"INSERT INTO ?? VALUES (UUID(), ?, ?, (SELECT COALESCE(MAX(count_table.order_num), 0) + 1 AS new_max FROM ?? AS count_table WHERE local_id = ?));",
 			[params.type, params.local_id, incoming_data.new_value, params.type, params.local_id]
 		);
 		db_connection.release();

@@ -6,6 +6,8 @@ import Category_rename_delete from "@/components/Category_rename_remove";
 import Article_add from "@/components/Article_add";
 import Category_order from "@/components/Category_order";
 import Category_limiter from "@/components/Category_limiter";
+import Article_order from "@/components/Article_order";
+import Article_edit from "@/components/Article_edit";
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
@@ -60,20 +62,54 @@ export default function Edit_drinks({ params }) {
 							<Article_add
 								local_id={params.local_id}
 								cat_id={cat.id}
+								cat_name={cat.name}
+								cat_type="drinks_cat"
+								items_type="drinks"
+								key={Math.random()}
 							/>
 						</div>
 
 						{cat.articles.map((article) => {
 							return (
 								<article
-									className="custom-bg px-4 p-2"
+									className={`custom-bg pr-2 p-2 flex gap-2 items-center ${article.order_num === 1 ? "pl-4" : "pl-2"}`}
 									key={article.id}
 								>
-									<p>Naziv: {article.name}</p>
-									<p>Cijena: {article.price}</p>
+									{article.order_num > 1 && (
+										<Article_order
+											local_id={params.local_id}
+											cat_type="drinks_cat"
+											items_type="drinks"
+											cat_id={cat.id}
+											item_name={article.name.replaceAll(" ", "_")}
+											order_num={article.order_num}
+											key={Math.random()}
+										/>
+									)}
 
-									{article.volume && <p>Zapremina: {article.volume}l</p>}
-									{article.desc && <p>Opis: {article.desc}</p>}
+									<div className="flex-grow">
+										<p>Naziv: {article.name}</p>
+										<p>
+											Cijena: {article.price} <span className="text-xs">KM</span>
+										</p>
+
+										{article.volume !== "0.00" && (
+											<p>
+												Zapremina: {article.volume} <span className="text-xs">l</span>
+											</p>
+										)}
+										{article.desc !== "" && <p>Opis: {article.desc}</p>}
+									</div>
+
+									<Article_edit
+										local_id={params.local_id}
+										cat_type="drinks_cat"
+										item_type="drinks"
+										article_id={article.id}
+										article_name={article.name}
+										order_num={article.order_num}
+										key={Math.random()}
+									/>
 								</article>
 							);
 						})}

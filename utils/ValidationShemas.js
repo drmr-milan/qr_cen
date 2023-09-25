@@ -144,3 +144,33 @@ export const Delete_cat_schema = z.object({
 export function Delete_cat_validation({ incoming_data }) {
 	return Delete_cat_schema.parse(incoming_data);
 }
+
+//* ============================================ //
+//* ========== NEW ARTICLE VALIDATION ========== //
+//* ============================================ //
+
+export const New_article_schema = z.object({
+	// new_value: z.string().max(50, { message: "Max 50 karaktera" }),
+	cat_id: z.string(),
+	name: z.string().max(50, { message: "Max 50 karaktera" }),
+	price: z.coerce.number(),
+	volume: z.coerce.number().optional(),
+	desc: z.string().max(50, { message: "Max 50 karaktera" }).optional(),
+});
+
+export function New_article_validation({ incoming_data }) {
+	return New_article_schema.parse(incoming_data);
+}
+
+//* ============================================= //
+//* ========= ORDER CATEGORY VALIDATION ========= //
+//* ============================================= //
+
+export const Order_article_schema = z.object({
+	cat_id: z.string(),
+	order_num: z.number(),
+});
+
+export function Order_article_validation({ incoming_data }) {
+	return Order_article_schema.parse(incoming_data);
+}
