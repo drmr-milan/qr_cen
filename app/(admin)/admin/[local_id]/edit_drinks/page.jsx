@@ -18,8 +18,8 @@ export default function Edit_drinks({ params }) {
 
 	const { content, local_info } = data;
 
-	console.log(content);
-	console.log(local_info);
+	// console.log(content);
+	// console.log(local_info);
 
 	return (
 		<main className="flex-grow py-8">
@@ -41,7 +41,7 @@ export default function Edit_drinks({ params }) {
 									local_id={params.local_id}
 									cat_type="drinks_cat"
 									items_type="drinks"
-									cat_name={cat.name.replaceAll(" ", "_")}
+									cat_id={cat.id}
 									order_num={cat.order_num}
 									key={Math.random()}
 								/>
@@ -81,7 +81,7 @@ export default function Edit_drinks({ params }) {
 											cat_type="drinks_cat"
 											items_type="drinks"
 											cat_id={cat.id}
-											item_name={article.name.replaceAll(" ", "_")}
+											article_id={article.id}
 											order_num={article.order_num}
 											key={Math.random()}
 										/>
