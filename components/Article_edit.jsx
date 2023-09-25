@@ -17,11 +17,54 @@ import { IconEdit } from "@tabler/icons-react";
 
 const fecher = (...args) => fetch(...args).then((res) => res.json());
 
-export default function Article_edit({ local_id, cat_type, items_type, cat_id, article_id, article_name, order_num }) {
-	const form = useForm({ resolver: zodResolver(Edit_cat_schema) });
+export default function Article_edit({
+	local_id,
+	cat_type,
+	items_type,
+	cat_id,
+	article_id,
+	article_name,
+	article_price,
+	article_volume,
+	article_descr,
+	order_num,
+}) {
+	// const form = useForm({ resolver: zodResolver(Edit_cat_schema) });
+	const form = useForm();
 	const form_remove = useForm();
 	const { toast } = useToast();
 	const [open, setOpen] = useState(false);
+
+	async function onSubmit(data) {
+		setOpen(false);
+
+		toast({
+			title: `Izmjena - naziva kategorije`,
+			description: <p>U toku</p>,
+		});
+
+		const send_data = await fecher(`/api/admin/${local_id}/articles/${cat_type}/${items_type}`, {
+			method: "PUT",
+			body: JSON.stringify({
+				article_id: data.article_id,
+				article_name: data.article_name,
+				article_price: data.article_price,
+				article_volume: data.article_volume,
+				article_descr: data.article_descr,
+			}),
+		}).catch((error) => {
+			console.log(error);
+			alert("Došlo je do greške.");
+			location.reload();
+		});
+
+		toast({
+			title: `Izmjena - naziva kategorije`,
+			description: <p>Uspjesno izmjenjeno</p>,
+		});
+
+		mutate(`/api/admin/${local_id}/categorys/${cat_type}/${items_type}`);
+	}
 
 	async function onSubmit_remove() {
 		setOpen(false);
@@ -68,14 +111,15 @@ export default function Article_edit({ local_id, cat_type, items_type, cat_id, a
 				<DialogHeader>
 					<DialogTitle className="mb-2">Izmjena - artikla {article_name}</DialogTitle>
 				</DialogHeader>
-				{/* <Form {...form}>
+				<Form {...form}>
 					<form
 						onSubmit={form.handleSubmit(onSubmit)}
-						id={`rename_${cat_type}_form`}
+						id={`edit_${article_id}_form`}
+						className="flex flex-col gap-4"
 					>
 						<FormField
-							name="cat_id"
-							defaultValue={cat_id}
+							name="article_id"
+							defaultValue={article_id}
 							render={({ field }) => (
 								<FormItem>
 									<Input
@@ -87,13 +131,68 @@ export default function Article_edit({ local_id, cat_type, items_type, cat_id, a
 						/>
 						<FormField
 							control={form.control}
-							name="new_value"
-							defaultValue={name || ""}
+							name="article_name"
+							defaultValue={article_name || ""}
 							render={({ field }) => (
 								<FormItem>
 									<FormControl>
 										<Input
 											{...field}
+											autoComplete="off"
+											type="text"
+											required
+										/>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							control={form.control}
+							name="article_price"
+							defaultValue={article_price || ""}
+							render={({ field }) => (
+								<FormItem>
+									<FormControl>
+										<Input
+											{...field}
+											autoComplete="off"
+											type="number"
+											required
+										/>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							control={form.control}
+							name="article_volume"
+							defaultValue={article_volume && article_volume !== "0.00" ? article_volume : ""}
+							render={({ field }) => (
+								<FormItem>
+									<FormControl>
+										<Input
+											{...field}
+											placeholder="Zapremina u litrama"
+											autoComplete="off"
+											type="number"
+										/>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							control={form.control}
+							name="article_descr"
+							defaultValue={article_descr || ""}
+							render={({ field }) => (
+								<FormItem>
+									<FormControl>
+										<Input
+											{...field}
+											placeholder="Opis"
 											autoComplete="off"
 											type="text"
 										/>
@@ -103,7 +202,7 @@ export default function Article_edit({ local_id, cat_type, items_type, cat_id, a
 							)}
 						/>
 					</form>
-				</Form> */}
+				</Form>
 
 				<Form {...form_remove}>
 					<form
@@ -113,13 +212,13 @@ export default function Article_edit({ local_id, cat_type, items_type, cat_id, a
 					></form>
 				</Form>
 				<DialogFooter className="grid gap-2">
-					{/* <Button
+					<Button
 						type="submit"
-						form={`rename_${cat_type}_form`}
+						form={`edit_${article_id}_form`}
 						className="bg-gray-900 text-gray-50"
 					>
 						Sačuvaj
-					</Button> */}
+					</Button>
 
 					<Button
 						type="submit"

@@ -73,7 +73,7 @@ export default function Edit_drinks({ params }) {
 							return (
 								<article
 									className={`custom-bg pr-2 p-2 flex gap-2 items-center ${article.order_num === 1 ? "pl-4" : "pl-2"}`}
-									key={article.id}
+									key={Math.random()}
 								>
 									{article.order_num > 1 && (
 										<Article_order
@@ -98,7 +98,7 @@ export default function Edit_drinks({ params }) {
 												Zapremina: {article.volume} <span className="text-xs">l</span>
 											</p>
 										)}
-										{article.desc !== "" && <p>Opis: {article.desc}</p>}
+										{article.descr && article.descr !== "" && <p>Opis: {article.descr}</p>}
 									</div>
 
 									<Article_edit
@@ -108,6 +108,9 @@ export default function Edit_drinks({ params }) {
 										cat_id={cat.id}
 										article_id={article.id}
 										article_name={article.name}
+										article_price={article.price}
+										article_volume={article.volume}
+										article_descr={article.descr}
 										order_num={article.order_num}
 										key={Math.random()}
 									/>

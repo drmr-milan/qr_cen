@@ -26,7 +26,7 @@ export async function POST(req, { params }) {
 				params.local_id,
 				incoming_data.cat_id,
 				incoming_data.volume,
-				incoming_data.desc,
+				incoming_data.descr,
 			]
 		);
 		db_connection.release();
@@ -37,6 +37,36 @@ export async function POST(req, { params }) {
 	}
 
 	return NextResponse.json({ message: `${incoming_data.items} added` }, { status: 200 });
+}
+
+export async function PUT(req, { params }) {
+	let incoming_data = null;
+	try {
+		incoming_data = await req.json();
+		// Edit_cat_validation({ incoming_data });
+	} catch (error) {
+		console.error(error);
+		return NextResponse.json({ message: "Invalid input data" }, { status: 422 });
+	}
+
+	const db_connection = await promisePool.getConnection();
+	try {
+		await db_connection.query("UPDATE ?? SET name = ?, price = ?, volume = ?, descr = ? WHERE id = ?;", [
+			params.items,
+			incoming_data.article_name,
+			Number(incoming_data.article_price),
+			Number(incoming_data.article_volume),
+			incoming_data.article_desc,
+			incoming_data.article_id,
+		]);
+		db_connection.release();
+	} catch (error) {
+		db_connection.release();
+		console.log(error);
+		return NextResponse.json({ message: "Error" }, { status: 500 });
+	}
+
+	return NextResponse.json({ message: `${incoming_data.col_name} item updated` }, { status: 200 });
 }
 
 export async function PATCH(req, { params }) {

@@ -155,7 +155,7 @@ export const New_article_schema = z.object({
 	name: z.string().max(50, { message: "Max 50 karaktera" }),
 	price: z.coerce.number(),
 	volume: z.coerce.number().optional(),
-	desc: z.string().max(50, { message: "Max 50 karaktera" }).optional(),
+	descr: z.string().max(50, { message: "Max 50 karaktera" }).optional(),
 });
 
 export function New_article_validation({ incoming_data }) {
