@@ -19,11 +19,11 @@ const fecher = (...args) => fetch(...args).then((res) => res.json());
 
 export default function Article_edit({ local_id, cat_type, items_type, cat_id, article_id, article_name, order_num }) {
 	const form = useForm({ resolver: zodResolver(Edit_cat_schema) });
-	const form_remove = useForm({ resolver: zodResolver(Delete_article_schema) });
+	const form_remove = useForm();
 	const { toast } = useToast();
 	const [open, setOpen] = useState(false);
 
-	async function onSubmit_remove(data) {
+	async function onSubmit_remove() {
 		setOpen(false);
 
 		toast({
@@ -33,7 +33,7 @@ export default function Article_edit({ local_id, cat_type, items_type, cat_id, a
 
 		const send_data = await fecher(`/api/admin/${local_id}/articles/${cat_type}/${items_type}`, {
 			method: "DELETE",
-			body: JSON.stringify({ article_id: data.article_id, cat_id: data.cat_id, order_num: data.order_num }),
+			body: JSON.stringify({ article_id, cat_id, order_num }),
 		}).catch((error) => {
 			console.log(error);
 			alert("Došlo je do greške.");
@@ -108,37 +108,9 @@ export default function Article_edit({ local_id, cat_type, items_type, cat_id, a
 				<Form {...form_remove}>
 					<form
 						onSubmit={form_remove.handleSubmit(onSubmit_remove)}
-						id={`remove_${article_name.replaceAll(" ", "_")}_form`}
+						id={`remove_${article_id}_form`}
 						className="hidden"
-					>
-						<FormField
-							name="cat_id"
-							defaultValue={cat_id}
-							render={({ field }) => (
-								<FormItem>
-									<Input {...field} />
-								</FormItem>
-							)}
-						/>
-						<FormField
-							name="article_id"
-							defaultValue={article_id}
-							render={({ field }) => (
-								<FormItem>
-									<Input {...field} />
-								</FormItem>
-							)}
-						/>
-						<FormField
-							name="order_num"
-							defaultValue={order_num}
-							render={({ field }) => (
-								<FormItem>
-									<Input {...field} />
-								</FormItem>
-							)}
-						/>
-					</form>
+					></form>
 				</Form>
 				<DialogFooter className="grid gap-2">
 					{/* <Button
@@ -152,7 +124,7 @@ export default function Article_edit({ local_id, cat_type, items_type, cat_id, a
 					<Button
 						type="submit"
 						variant="destructive"
-						form={`remove_${article_name.replaceAll(" ", "_")}_form`}
+						form={`remove_${article_id}_form`}
 					>
 						Obriši artikl
 					</Button>
