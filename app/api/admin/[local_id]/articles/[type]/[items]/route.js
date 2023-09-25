@@ -48,7 +48,7 @@ export async function PATCH(req, { params }) {
 		console.error(error);
 		return NextResponse.json({ message: "Invalid input data" }, { status: 422 });
 	}
-	console.log(incoming_data);
+
 	const db_connection = await promisePool.getConnection();
 	try {
 		await db_connection.query(

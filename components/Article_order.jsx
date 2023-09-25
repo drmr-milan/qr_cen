@@ -15,7 +15,7 @@ import { IconArrowBadgeUp } from "@tabler/icons-react";
 
 const fecher = (...args) => fetch(...args).then((res) => res.json());
 
-export default function Article_order({ local_id, cat_type, items_type, cat_id, artricle_id, order_num }) {
+export default function Article_order({ local_id, cat_type, items_type, cat_id, article_id, order_num }) {
 	const form = useForm({ resolver: zodResolver(Order_article_schema) });
 	const { toast } = useToast();
 
@@ -49,7 +49,7 @@ export default function Article_order({ local_id, cat_type, items_type, cat_id, 
 			<Form {...form}>
 				<form
 					onSubmit={form.handleSubmit(onSubmit)}
-					id={`order_${artricle_id}_form`}
+					id={`order_${article_id}_form`}
 					className="hidden"
 				>
 					<FormField
@@ -80,7 +80,7 @@ export default function Article_order({ local_id, cat_type, items_type, cat_id, 
 			</Form>
 			<Button
 				type="submit"
-				form={`order_${artricle_id}_form`}
+				form={`order_${article_id}_form`}
 				variant="ghost"
 				size="icon"
 			>

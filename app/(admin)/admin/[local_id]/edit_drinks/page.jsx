@@ -18,7 +18,7 @@ export default function Edit_drinks({ params }) {
 
 	const { content, local_info } = data;
 
-	// console.log(content);
+	console.log(content);
 	// console.log(local_info);
 
 	return (
